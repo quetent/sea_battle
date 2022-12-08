@@ -2,9 +2,16 @@
 {
     internal static class Drawer
     {
-        private static readonly string _axes_indent = new(' ', 1);
-        private static readonly string _indent_between_fields = new(' ', 5);
+        private static readonly string _axes_indent;
+        private static readonly string _indent_between_fields;
+
         private static readonly string _indent_from_number = new(' ', Field.CountOfLetters.Length() - 1);
+
+        static Drawer()
+        {
+            _axes_indent = new(' ', 1);
+            _indent_between_fields = new(' ', 5);
+        }
 
         public static void DrawFields(Field attackField, Field defenseField)
         {
@@ -15,10 +22,10 @@
 
         public static void DrawField(Field field)
         {
-            DrawLettersLine();
+            DrawFieldLettersLine();
             DrawRepeatedEmptyLine(2);
-
             DrawNumbersAndField(field);
+            DrawLine();
         }
 
         private static void DrawLine()
@@ -31,9 +38,10 @@
             Write(arg);
         }
 
-        private static void DrawField(Field field, int coordNumber, bool hideShips = false)
+        private static void DrawField(Field field, int coordNumber, bool isSingleField = true, bool hideShips = false)
         {
-            Draw(coordNumber + _axes_indent);
+            if (!isSingleField)
+                Draw(coordNumber + _axes_indent);
 
             for (int y = 0; y < field.GetLength(1); y++)
             {
@@ -47,20 +55,14 @@
             }
         }
 
-        private static void DrawRepeatedEmptyLine(int repeats)
-        {
-            for (int i = 0; i < repeats; i++)
-                DrawLine();
-        }
-
         private static void DrawFieldsLettersLine()
         {
-            DrawLettersLine();
+            DrawFieldLettersLine();
             Draw(_indent_between_fields);
-            DrawLettersLine();
+            DrawFieldLettersLine();
         }
 
-        private static void DrawLettersLine()
+        private static void DrawFieldLettersLine()
         {
             Draw(_indent_from_number + _axes_indent);
 
@@ -73,7 +75,7 @@
             for (int i = 0; i < field.GetLength(0); i++)
             {
                 Draw(i + _axes_indent);
-                DrawField(field, i);
+                DrawField(field, i, true, true);
                 DrawLine();
             }
         }
@@ -82,12 +84,23 @@
         {
             for (int i = 0; i < attackField.GetLength(0); i++)
             {
-                DrawField(attackField, i, true);
+                DrawField(attackField, i, false, true);
                 Draw(_indent_between_fields);
-                DrawField(defenseField, i);
+                DrawField(defenseField, i, false, false);
 
                 DrawLine();
             }
+        }
+
+        private static void DrawRepeatedEmptyLine(int repeats)
+        {
+            for (int i = 0; i < repeats; i++)
+                DrawLine();
+        }
+
+        private static void SetColor()
+        {
+            ForegroundColor = ConsoleColor.Red;
         }
     }
 }

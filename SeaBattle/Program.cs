@@ -4,8 +4,7 @@
     {
         static void Main(string[] args)
         {
-            while (true)
-                new Game().Start();
+            new Game().Start();
         }
     }
 }
