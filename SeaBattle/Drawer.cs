@@ -33,6 +33,7 @@ namespace SeaBattle
             DrawNumbersAndFields(attackField, defenseField);
             DrawPlayerCaption(_indent_from_digit + _axes_indent, "< Enemy >");
             DrawPlayerCaption(_indent_from_digit + _axes_indent + _indent_between_fields + " ", "< You >");
+            DrawLine();
         }
 
         public static void DrawField(Field field)
