@@ -12,4 +12,17 @@
             return (int)Math.Floor(Math.Log10(Math.Abs(number)) + 1);
         }
     }
+
+    internal static class StringExtensions
+    {
+        public static bool ConsistsOfLetters(this string str)
+        {
+            return str.ToCharArray().All(x => char.IsLetter(x));
+        }
+
+        public static bool ConsistsOfDigits(this string str)
+        {
+            return str.ToCharArray().All(x => char.IsDigit(x));
+        }
+    }
 }

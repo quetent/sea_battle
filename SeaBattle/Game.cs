@@ -11,6 +11,7 @@
             field2.ParseFieldFromFile(new FileInfo(@"D:\\projects\\cs projects\\SeaBattle\\SeaBattle\\playerFieldTesting.txt"));
 
             Drawer.DrawFields(field1, field2);
+            //Drawer.DrawField(field1);
         }
     }
 }

@@ -2,10 +2,11 @@
 {
     internal class Field
     {
-        public const int CountOfLetters = 10;
-        public const int CountOfNumbers = 10;
+        public const int LettersCount = 10;
+        public const int NumbersCount = 10;
 
         private const int AlphabetSize = 26;
+        private const int NumbersSize = 10;
 
         private static readonly Array _marks = Enum.GetValues(typeof(FieldMarks));
 
@@ -13,16 +14,16 @@
 
         static Field()
         {
-            if (!CountOfLetters.InRange(1, AlphabetSize))
-                throw new Exception($"const {nameof(CountOfLetters)} should be in the range from 1 to 25");
+            if (!LettersCount.InRange(1, AlphabetSize))
+                throw new Exception($"const {nameof(LettersCount)} should be in the range from 1 to 25");
 
-            if (CountOfNumbers <= 1)
-                throw new Exception($"const {nameof(CountOfNumbers)} should be more than 0");
+            if (!NumbersCount.InRange(1, NumbersSize))
+                throw new Exception($"const {nameof(NumbersCount)} should be more than 0");
         }
 
         public Field()
         {
-            _field = new FieldMarks[CountOfLetters, CountOfNumbers];
+            _field = new FieldMarks[LettersCount, NumbersCount];
         }
 
         public FieldMarks this[int index1, int index2]
@@ -59,7 +60,7 @@
             return _field.GetLength(dimension);
         }
 
-        private static bool IsCharacterFieldMark(char character)
+        internal static bool IsCharacterFieldMark(char character)
         {
             foreach (var value in _marks)
                 if (character == (char)(FieldMarks)value)
@@ -71,10 +72,10 @@
         private static bool IsFieldInputFileCorrupted(string[] fieldAsLines)
         {
             for (int i = 0; i < fieldAsLines.Length; i++)
-                if (fieldAsLines[i].Length != CountOfLetters + 1)
+                if (fieldAsLines[i].Length != LettersCount + 1)
                     return true;
 
-            return fieldAsLines.Length != CountOfNumbers + 1;
+            return fieldAsLines.Length != NumbersCount + 1;
         }
     }
 }
