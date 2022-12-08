@@ -2,7 +2,8 @@
 {
     internal static class Drawer
     {
-        private static readonly string _indent = new string(' ', 1);
+        private static readonly string _indent = new(' ', 1);
+        private static readonly string _number_intend = new (' ', Field.CountOfLetters.Length());
 
         public static void DrawFields(Field attackField, Field defenseField)
         {
@@ -11,7 +12,7 @@
 
         public static void DrawField(Field field)
         {
-            Write(" " + _indent);
+            Write(_number_intend + _indent);
 
             for (int i = 0; i < Field.CountOfLetters; i++)
             {
