@@ -2,16 +2,35 @@
 {
     internal class Field
     {
-        private const int CountOfLetters = 10;
-        private const int CountOfNumbers = 10;
+        public const int CountOfLetters = 10;
+        public const int CountOfNumbers = 10;
+
+        private const int AlphabetSize = 26;
 
         private static readonly Array _marks = Enum.GetValues(typeof(FieldMarks));
 
         private readonly FieldMarks[,] _field;
 
+        static Field()
+        {
+            if (!CountOfLetters.InRange(1, AlphabetSize))
+                throw new Exception($"const {nameof(CountOfLetters)} should be in the range from 1 to 25");
+
+            if (CountOfNumbers <= 1)
+                throw new Exception($"const {nameof(CountOfNumbers)} should be more than 0");
+        }
+
         public Field()
         {
             _field = new FieldMarks[CountOfLetters, CountOfNumbers];
+        }
+
+        public FieldMarks this[int index1, int index2]
+        {
+            get
+            {
+                return _field[index1, index2];
+            }
         }
 
         public void ParseFieldFromFile(FileInfo file)
@@ -33,6 +52,11 @@
                         throw new Exception($"Invalid mark \"{character}\"");
                 }
             }
+        }
+
+        public int GetLength(int dimension)
+        {
+            return _field.GetLength(dimension);
         }
 
         private static bool IsCharacterFieldMark(char character)

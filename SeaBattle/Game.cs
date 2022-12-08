@@ -5,7 +5,8 @@
         public void Start()
         {
             var field = new Field();
-            field.ParseFieldFromFile(new FileInfo(@"D:\\projects\\cs projects\\SeaBattle\\SeaBattle\\playerFieldExample.txt"));
+            field.ParseFieldFromFile(new FileInfo(@"D:\\projects\\cs projects\\SeaBattle\\SeaBattle\\playerFieldTesting.txt"));
+            Drawer.DrawField(field);
         }
     }
 }
