@@ -2,12 +2,14 @@
 {
     internal static class CommandReader
     {
-        public static Command ReadCommand()
+        public static Command ReadCommand(out string rawOutput)
         {
             ConsoleForegroundColor = ConsoleColor.White;
             Write(">>> "); //
 
-            return ParseCommand(ReadLine());
+            rawOutput = ReadLine().ToUpper();
+            
+            return ParseCommand(rawOutput);
         }
 
         private static Command ParseCommand(string? command)
@@ -15,13 +17,11 @@
             if (IsCommandEmpty(command))
                 return new Command(CommandsEnum.Empty);
 
-            command = command.ToUpper();
-
             if (IsAttackSignatureCommand(command))
             {
                 if (command[0].InRange(0 + CharacterOffset, CharacterOffset + LettersCount - 1)
                  && int.Parse(command[1..]).InRange(0, NumbersSize - 1))
-                    return new Command(CommandsEnum.Attack);
+                    return new Command(CommandsEnum.SimpleAttack);
                 else
                     return new Command(CommandsEnum.Invalid);
             }
@@ -36,7 +36,7 @@
 
         private static bool IsAttackSignatureCommand(string command)
         {
-            return command.Length > 2 
+            return command.Length >= 2 
                 && char.IsLetter(command[0]) 
                 && command[1..].ConsistsOfDigits();
         }

@@ -2,7 +2,7 @@
 {
     internal enum CommandsEnum
     {
-        Attack,
+        SimpleAttack,
         Restart,
         Stop,
         Invalid,

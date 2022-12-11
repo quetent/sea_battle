@@ -25,6 +25,12 @@ namespace SeaBattle
             DrawLine();
         }
 
+        public static void DrawRepeatedEmptyLine(int repeats)
+        {
+            for (int i = 0; i < repeats; i++)
+                DrawLine();
+        }
+
         public static void DrawLine()
         {
             WriteLine();
@@ -99,12 +105,6 @@ namespace SeaBattle
         private static void DrawPlayerCaption(string indent, string caption)
         {
             Draw(indent + caption, PlayerCaptionColor);
-        }
-
-        private static void DrawRepeatedEmptyLine(int repeats)
-        {
-            for (int i = 0; i < repeats; i++)
-                DrawLine();
         }
 
         private static ConsoleColor AutoDetermineColor(object? obj)

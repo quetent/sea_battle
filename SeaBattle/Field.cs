@@ -2,6 +2,9 @@
 {
     internal class Field
     {
+        private int _shipCount;
+        public int ShipCount { get { return _shipCount; } }
+
         private static readonly Array _marks = Enum.GetValues(typeof(FieldMarks));
 
         private readonly FieldMarks[,] _field;
@@ -20,7 +23,18 @@
             _field = new FieldMarks[LettersCount, NumbersCount];
         }
 
-        public FieldMarks this[int index1, int index2] { get { return _field[index1, index2]; } }
+        public FieldMarks this[int index1, int index2] 
+        { 
+            get 
+            { 
+                return _field[index1, index2]; 
+            } 
+
+            private set
+            {
+                _field[index1, index2] = value;
+            }
+        }
 
         public static bool IsCharacterFieldMark(char character)
         {
@@ -31,9 +45,12 @@
             return false;
         }
 
-        public static void ProduceAttack(Field field)
+        public static void ProduceAttack(FieldCoords coords, Field field)
         {
-
+            if (field[coords.Y, coords.X] is FieldMarks.Ship)
+                field[coords.Y, coords.X] = FieldMarks.Hit;
+            else
+                field[coords.Y, coords.X] = FieldMarks.Miss;
         }
 
         public void ParseFieldFromFile(FileInfo file)
@@ -50,9 +67,14 @@
                 {
                     var character = line[j];
                     if (IsCharacterFieldMark(character))
+                    {
                         _field[i - 1, j - 1] = (FieldMarks)character;
+
+                        if (character == (char)FieldMarks.Ship)
+                            _shipCount++;
+                    }
                     else
-                        throw new Exception($"Invalid mark \"{character}\"");
+                        throw new FileLoadException($"Invalid mark \"{character}\"");
                 }
             }
         }

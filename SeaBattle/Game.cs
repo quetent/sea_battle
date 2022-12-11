@@ -1,4 +1,6 @@
-﻿namespace SeaBattle
+﻿using System.ComponentModel;
+
+namespace SeaBattle
 {
     internal class Game
     {
@@ -19,30 +21,70 @@
             while (true)
             {
                 var currentPlayer = _player1;
+                var playerOpponent = _player2;
+
                 Drawer.DrawFields(currentPlayer.AttackField, currentPlayer.DefenseField);
-                currentPlayer.Turn();
-                Drawer.DrawFields(currentPlayer.AttackField, currentPlayer.DefenseField);
-                Drawer.DrawLine();
+
+                var turnCommand = currentPlayer.Turn();
+
+                ProcessCommand(turnCommand, currentPlayer, playerOpponent);
+
+                //Drawer.DrawFields(currentPlayer.AttackField, currentPlayer.DefenseField);
+                Drawer.DrawRepeatedEmptyLine(2);
             }
         }
 
-        public static void ExecuteGlobalCommand(Command command)
+        private void ProcessCommand(Command command, Player attacker, Player defenser)
         {
             switch (command.Type)
             {
+                case CommandsEnum.SimpleAttack:
+                    ExecuteAttackCommand(attacker.LastAttackCoords, defenser.DefenseField);
+                    break;
                 case CommandsEnum.Restart:
+                    Restart();
                     break;
                 case CommandsEnum.Stop:
+                    Stop();
+                    break;
+                case CommandsEnum.Invalid:
+                    LogInvalidCommand();
+                    break;
+                case CommandsEnum.Empty:
+                    LogEmptyCommand();
+                    break;
+                default:
+                    LogUnknownCommand();
                     break;
             }
         }
 
-        public static void ExecuteAttackCommand(Command command, Field attackField)
+        public static void ExecuteAttackCommand(FieldCoords coords, Field attackField)
         {
-            Field.ProduceAttack(attackField);
+            Field.ProduceAttack(coords, attackField);
+        }
+
+        public static void LogInvalidCommand()
+        {
+            Logger.Log($"< {CommandsEnum.Invalid} command >", ConsoleColor.DarkRed);
+        }
+
+        public static void LogEmptyCommand()
+        {
+            Logger.Log($"< {CommandsEnum.Empty} command >", ConsoleColor.DarkRed);
+        }
+
+        public static void LogUnknownCommand()
+        {
+            Logger.Log($"< {CommandsEnum.Unknown} command >", ConsoleColor.DarkRed);
         }
 
         public void Restart()
+        {
+
+        }
+
+        public void Stop()
         {
 
         }
