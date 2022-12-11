@@ -2,12 +2,6 @@
 {
     internal class Field
     {
-        public const int LettersCount = 10;
-        public const int NumbersCount = 10;
-
-        private const int AlphabetSize = 26;
-        private const int NumbersSize = 10;
-
         private static readonly Array _marks = Enum.GetValues(typeof(FieldMarks));
 
         private readonly FieldMarks[,] _field;
@@ -15,10 +9,10 @@
         static Field()
         {
             if (!LettersCount.InRange(1, AlphabetSize))
-                throw new Exception($"const {nameof(LettersCount)} should be in the range from 1 to 25");
+                throw new Exception($"{nameof(LettersCount)} should be in the range from 1 to 25");
 
             if (!NumbersCount.InRange(1, NumbersSize))
-                throw new Exception($"const {nameof(NumbersCount)} should be more than 0");
+                throw new Exception($"{nameof(NumbersCount)} should be more than 0");
         }
 
         public Field()
@@ -26,12 +20,20 @@
             _field = new FieldMarks[LettersCount, NumbersCount];
         }
 
-        public FieldMarks this[int index1, int index2]
+        public FieldMarks this[int index1, int index2] { get { return _field[index1, index2]; } }
+
+        public static bool IsCharacterFieldMark(char character)
         {
-            get
-            {
-                return _field[index1, index2];
-            }
+            foreach (var value in _marks)
+                if (character == (char)(FieldMarks)value)
+                    return true;
+
+            return false;
+        }
+
+        public static void ProduceAttack(Field field)
+        {
+
         }
 
         public void ParseFieldFromFile(FileInfo file)
@@ -58,15 +60,6 @@
         public int GetLength(int dimension)
         {
             return _field.GetLength(dimension);
-        }
-
-        internal static bool IsCharacterFieldMark(char character)
-        {
-            foreach (var value in _marks)
-                if (character == (char)(FieldMarks)value)
-                    return true;
-
-            return false;
         }
 
         private static bool IsFieldInputFileCorrupted(string[] fieldAsLines)

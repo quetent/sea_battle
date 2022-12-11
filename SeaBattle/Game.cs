@@ -16,9 +16,35 @@
 
         public void Start()
         {
-            Drawer.DrawFields(_player2.DefenseField, _player1.DefenseField); // pl1 turn
+            while (true)
+            {
+                var currentPlayer = _player1;
+                Drawer.DrawFields(currentPlayer.AttackField, currentPlayer.DefenseField);
+                currentPlayer.Turn();
+                Drawer.DrawFields(currentPlayer.AttackField, currentPlayer.DefenseField);
+                Drawer.DrawLine();
+            }
         }
 
+        public static void ExecuteGlobalCommand(Command command)
+        {
+            switch (command.Type)
+            {
+                case CommandsEnum.Restart:
+                    break;
+                case CommandsEnum.Stop:
+                    break;
+            }
+        }
 
+        public static void ExecuteAttackCommand(Command command, Field attackField)
+        {
+            Field.ProduceAttack(attackField);
+        }
+
+        public void Restart()
+        {
+
+        }
     }
 }

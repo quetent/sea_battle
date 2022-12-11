@@ -25,4 +25,12 @@
             return str.ToCharArray().All(x => char.IsDigit(x));
         }
     }
+
+    internal static class CharExtensions
+    {
+        public static bool InRange(this char character, int bottom, int top)
+        {
+            return ((int)character).InRange(bottom, top);
+        }
+    }
 }

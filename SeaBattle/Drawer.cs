@@ -6,46 +6,26 @@ namespace SeaBattle
 {
     internal static class Drawer
     {
-        private static readonly string _axes_indent;
-        private static readonly string _indent_between_fields;
-        private static readonly string _indent_from_digit;
-
-        private static readonly ConsoleColor _digitsColor;
-        private static readonly ConsoleColor _lettersColor;
-        private static readonly ConsoleColor _enemyCaptionColor;
-
-
-        static Drawer()
-        {
-            _axes_indent = new(' ', 1);
-            _indent_between_fields = new(' ', 5);
-            _indent_from_digit = new(' ', 1);
-
-            _digitsColor = ConsoleColor.White;
-            _lettersColor = ConsoleColor.DarkBlue;
-            _enemyCaptionColor = ConsoleColor.DarkYellow;
-        }
-
-        public static void DrawFields(Field attackField, Field defenseField)
+        public static void DrawFields(Field attackField, Field defenseField) //
         {
             DrawFieldsLettersLine();
-            DrawRepeatedEmptyLine(2);
+            DrawRepeatedEmptyLine(Axes_indent.Length);
             DrawNumbersAndFields(attackField, defenseField);
-            DrawPlayerCaption(_indent_from_digit + _axes_indent, "< Enemy >");
-            DrawPlayerCaption(_indent_from_digit + _axes_indent + _indent_between_fields + " ", "< You >");
+            DrawPlayerCaption(Indent_from_digit + Axes_indent, "< Enemy >");
+            DrawPlayerCaption(Indent_from_digit + Axes_indent + Indent_between_fields + " ", "< You >");
             DrawLine();
         }
 
-        public static void DrawField(Field field)
+        public static void DrawField(Field field) //
         {
             DrawFieldLettersLine();
-            DrawRepeatedEmptyLine(2);
+            DrawRepeatedEmptyLine(Axes_indent.Length);
             DrawNumbersAndField(field);
-            Draw(_indent_from_digit + _axes_indent + "< Enemy >", _enemyCaptionColor);
+            DrawPlayerCaption(Indent_from_digit + Axes_indent, "< Enemy >");
             DrawLine();
         }
 
-        private static void DrawLine()
+        public static void DrawLine()
         {
             WriteLine();
         }
@@ -57,14 +37,15 @@ namespace SeaBattle
 
         private static void Draw(object? obj, ConsoleColor color)
         {
-            SetForegroundColor(color);
+            ConsoleForegroundColor = color;
             Write(obj?.ToString());
+            ResetConsoleForegroundColor();
         }
 
         private static void DrawField(Field field, int coordNumber, bool isSingleField = true, bool hideShips = false)
         {
             if (!isSingleField)
-                Draw(coordNumber + _axes_indent);
+                Draw(coordNumber + Axes_indent);
 
             for (int y = 0; y < field.GetLength(1); y++)
             {
@@ -81,15 +62,15 @@ namespace SeaBattle
         private static void DrawFieldsLettersLine()
         {
             DrawFieldLettersLine();
-            Draw(_indent_between_fields);
+            Draw(Indent_between_fields);
             DrawFieldLettersLine();
         }
 
         private static void DrawFieldLettersLine()
         {
-            Draw(_indent_from_digit + _axes_indent);
+            Draw(Indent_from_digit + Axes_indent);
 
-            for (int i = 0; i < Field.LettersCount; i++)
+            for (int i = 0; i < LettersCount; i++)
                 Draw($"{Convert.ToChar(i + 65)}");
         }
 
@@ -97,7 +78,7 @@ namespace SeaBattle
         {
             for (int i = 0; i < field.GetLength(0); i++)
             {
-                Draw(i + _axes_indent);
+                Draw(i + Axes_indent);
                 DrawField(field, i, true, true);
                 DrawLine();
             }
@@ -108,7 +89,7 @@ namespace SeaBattle
             for (int i = 0; i < attackField.GetLength(0); i++)
             {
                 DrawField(attackField, i, false, true);
-                Draw(_indent_between_fields);
+                Draw(Indent_between_fields);
                 DrawField(defenseField, i, false, false);
 
                 DrawLine();
@@ -117,18 +98,13 @@ namespace SeaBattle
 
         private static void DrawPlayerCaption(string indent, string caption)
         {
-            Draw(indent + caption, _enemyCaptionColor);
+            Draw(indent + caption, PlayerCaptionColor);
         }
 
         private static void DrawRepeatedEmptyLine(int repeats)
         {
             for (int i = 0; i < repeats; i++)
                 DrawLine();
-        }
-
-        private static void SetForegroundColor(ConsoleColor color)
-        {
-            ForegroundColor = color;
         }
 
         private static ConsoleColor AutoDetermineColor(object? obj)
@@ -163,9 +139,9 @@ namespace SeaBattle
             ConsoleColor color;
 
             if (str.ConsistsOfDigits())
-                color = _digitsColor;
+                color = DigitsColor;
             else if (str.ConsistsOfLetters())
-                color = _lettersColor;
+                color = LettersColor;
             else
                 color = ConsoleColor.White;
 
