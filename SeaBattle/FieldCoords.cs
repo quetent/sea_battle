@@ -35,6 +35,11 @@
             return y.InRange(0, NumbersCount - 1);
         }
 
+        private static bool IsValidCoordX(char x)
+        {
+            return x.InRange(CharacterOffset, CharacterOffset + AlphabetSize - 1);
+        }
+
         private static int ParseX(int x)
         {
             if (!x.InRange(0, NumbersCount - 1))

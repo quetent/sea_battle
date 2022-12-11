@@ -61,7 +61,7 @@ namespace SeaBattle
 
         public static void ExecuteAttackCommand(FieldCoords coords, Field attackField)
         {
-            Field.ProduceAttack(coords, attackField);
+            attackField.ProduceAttack(coords);
         }
 
         public static void LogInvalidCommand()

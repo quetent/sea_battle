@@ -30,7 +30,6 @@
             { 
                 return _field[index1, index2]; 
             } 
-
             private set
             {
                 _field[index1, index2] = value;
@@ -52,12 +51,25 @@
             return false;
         }
 
-        public static void ProduceAttack(FieldCoords coords, Field field)
+        public void ProduceAttack(FieldCoords coords)
         {
-            if (field[coords.Y, coords.X] is FieldMarks.Ship)
-                field[coords.Y, coords.X] = FieldMarks.Hit;
+            if (this[coords.Y, coords.X] is FieldMarks.Ship)
+            {
+                var shipExists = GetShipByCoords(coords, out Ship? ship);
+
+                if (shipExists)
+                    ship.Hits++;
+
+                this[coords.Y, coords.X] = FieldMarks.Hit;
+
+                if (shipExists && ship.IsDestroyed())
+                {
+                    var frame = ship.GetDestroyFrame();
+                    SetDestroyFrame(frame);
+                }
+            }
             else
-                field[coords.Y, coords.X] = FieldMarks.Miss;
+                this[coords.Y, coords.X] = FieldMarks.Miss;
         }
 
         public void ParseFieldFromFile(FileInfo file)
@@ -92,6 +104,14 @@
             return _field.GetLength(dimension);
         }
 
+        private void SetDestroyFrame(List<FieldCoords> frame)
+        {
+            foreach (var coords in frame)
+            {
+                _field[coords.Y, coords.X] = FieldMarks.Miss;
+            }
+        }
+
         private static bool IsFieldInputFileCorrupted(string[] fieldAsLines)
         {
             for (int i = 0; i < fieldAsLines.Length; i++)
@@ -99,6 +119,24 @@
                     return true;
 
             return fieldAsLines.Length != NumbersCount + 1;
+        }
+
+        private void IncrementShipHits(FieldCoords coords)
+        {
+
+        }
+
+        private bool GetShipByCoords(FieldCoords coords, out Ship? ship)
+        {
+            foreach (var _ship in _ships)
+                if (_ship.Belongs(coords))
+                {
+                    ship = _ship;
+                    return true;
+                }
+
+            ship = null;
+            return false;
         }
 
         private bool IsShipDefinedOnField(FieldCoords coords)
@@ -125,7 +163,6 @@
                         _ships.Add(new Ship(coords, _field));
                 }
             }
-
         }
     }
 }

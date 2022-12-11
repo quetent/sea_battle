@@ -7,6 +7,19 @@ namespace SeaBattle
         private readonly List<FieldCoords> _location;
         public List<FieldCoords> Location { get { return _location.Copy(); } }
 
+        private int _hits;
+        public int Hits 
+        { 
+            get 
+            { 
+                return _hits; 
+            }
+            set
+            {
+                _hits = value;
+            }
+        }
+
         public int Size { get { return _location.Count; } }
 
         public Ship(FieldCoords coords, FieldMarks[,] searchField)
@@ -27,6 +40,11 @@ namespace SeaBattle
             return $"[ {result} ]";
         }
 
+        public bool IsDestroyed()
+        {
+            return Size == _hits;
+        }
+
         public bool Belongs(FieldCoords coords)
         {
             foreach (var _coords in _location)
@@ -35,6 +53,21 @@ namespace SeaBattle
                     return true;
 
             return false;
+        }
+
+        public List<FieldCoords> GetDestroyFrame()
+        {
+            var result = new List<FieldCoords>();
+
+            foreach (var elem in _location)
+            {//
+                if (Field.IsInFieldRange(elem.X + 1, elem.Y) && !Belongs(new FieldCoords(elem.X + 1, elem.X + 1)))
+                    result.Add(elem);
+                if (Field.IsInFieldRange(elem.X, elem.Y + 1) && !Belongs(new FieldCoords(elem.X, elem.Y + 1)))
+                    result.Add(elem);
+            }
+
+            return result;
         }
 
         private void Reproduce(FieldCoords coords, FieldMarks[,] searchField)
