@@ -33,4 +33,12 @@
             return ((int)character).InRange(bottom, top);
         }
     }
+
+    internal static class ListExtensions
+    {
+        public static List<T> Copy<T>(this List<T> list)
+        {
+            return new List<T>(list);
+        }
+    }
 }

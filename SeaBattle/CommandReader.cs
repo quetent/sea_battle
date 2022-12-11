@@ -20,7 +20,7 @@
             if (IsAttackSignatureCommand(command))
             {
                 if (command[0].InRange(0 + CharacterOffset, CharacterOffset + LettersCount - 1)
-                 && int.Parse(command[1..]).InRange(0, NumbersSize - 1))
+                 && int.Parse(command[1..]).InRange(0, NumbersCount - 1))
                     return new Command(CommandsEnum.SimpleAttack);
                 else
                     return new Command(CommandsEnum.Invalid);

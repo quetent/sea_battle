@@ -13,7 +13,6 @@
         public static readonly int NumbersCount = 10;
 
         public static readonly int AlphabetSize = 26;
-        public static readonly int NumbersSize = 10;
 
         public static readonly int CharacterOffset = 65;
 

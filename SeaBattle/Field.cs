@@ -2,8 +2,8 @@
 {
     internal class Field
     {
-        private int _shipCount;
-        public int ShipCount { get { return _shipCount; } }
+        private readonly List<Ship> _ships;
+        public List<Ship> Ships { get { return _ships.Copy(); } }
 
         private static readonly Array _marks = Enum.GetValues(typeof(FieldMarks));
 
@@ -14,13 +14,14 @@
             if (!LettersCount.InRange(1, AlphabetSize))
                 throw new Exception($"{nameof(LettersCount)} should be in the range from 1 to 25");
 
-            if (!NumbersCount.InRange(1, NumbersSize))
+            if (!NumbersCount.InRange(1, NumbersCount))
                 throw new Exception($"{nameof(NumbersCount)} should be more than 0");
         }
 
         public Field()
         {
             _field = new FieldMarks[LettersCount, NumbersCount];
+            _ships = new List<Ship>();
         }
 
         public FieldMarks this[int index1, int index2] 
@@ -34,6 +35,12 @@
             {
                 _field[index1, index2] = value;
             }
+        }
+
+        public static bool IsInFieldRange(int x, int y)
+        {
+            return FieldCoords.IsValidCoordX(x)
+                && FieldCoords.IsValidCoordY(y);
         }
 
         public static bool IsCharacterFieldMark(char character)
@@ -58,7 +65,7 @@
             var fieldAsLines = File.ReadAllLines(file.FullName);
 
             if (IsFieldInputFileCorrupted(fieldAsLines))
-                throw new Exception("Field input file is corrupted");
+                throw new FileLoadException("Field input file is corrupted");
 
             for (int i = 1; i < fieldAsLines.Length; i++)
             {
@@ -68,15 +75,16 @@
                     var character = line[j];
                     if (IsCharacterFieldMark(character))
                     {
-                        _field[i - 1, j - 1] = (FieldMarks)character;
+                        (var cX, var cY) = (i - 1, j - 1);
 
-                        if (character == (char)FieldMarks.Ship)
-                            _shipCount++;
+                        _field[cX, cY] = (FieldMarks)character;
                     }
                     else
                         throw new FileLoadException($"Invalid mark \"{character}\"");
                 }
             }
+
+            ParseShips();
         }
 
         public int GetLength(int dimension)
@@ -91,6 +99,33 @@
                     return true;
 
             return fieldAsLines.Length != NumbersCount + 1;
+        }
+
+        private bool IsShipDefinedOnField(FieldCoords coords)
+        {
+            foreach (var ship in _ships)
+            {
+                if (ship.Belongs(coords))
+                    return true;
+            }
+
+            return false;
+        }
+
+        private void ParseShips()
+        {
+            for (int x = 0; x < _field.GetLength(0); x++)
+            {
+                for (int y = 0; y < _field.GetLength(1); y++)
+                {
+                    var coords = new FieldCoords(x, y);
+
+                    if (_field[x, y] is FieldMarks.Ship
+                    && !IsShipDefinedOnField(coords))
+                        _ships.Add(new Ship(coords, _field));
+                }
+            }
+
         }
     }
 }
