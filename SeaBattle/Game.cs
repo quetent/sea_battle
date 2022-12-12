@@ -26,14 +26,13 @@ namespace SeaBattle
         {
             while (!_isStopped)
             {
-                _gamesCount++;
-
                 var switching = random.Next(0, 2);
                 var attackPlayer = SwitchPlayers(ref switching);
+                var isGameEnded = IsGameEnded();
                 var isNeedSwitching = false;
                 var isNeedRestarting = false;
 
-                while (!IsGameEnded())
+                while (!isGameEnded)
                 {
                     if (isNeedSwitching)
                         attackPlayer = SwitchPlayers(ref switching);
@@ -47,14 +46,17 @@ namespace SeaBattle
 
                     if (IsGameBreak(turnCommand))
                     {
+                        _gamesCount++;
                         isNeedRestarting = turnCommand.Type is CommandsEnum.Restart;
                         break;
                     }
 
                     CloseTurn(attackPlayer);
 
-                    if (IsGameEnded())
+                    isGameEnded = IsGameEnded();
+                    if (isGameEnded)
                     {
+                        _gamesCount++;
                         DeclareWinner(attackPlayer);
                         isNeedRestarting = true;
                     }
@@ -71,10 +73,14 @@ namespace SeaBattle
         {
             Drawer.Erase();
             Logger.LogRefreshFieldsReady();
+
             CommandReader.WaitButtonPress();
+
             Logger.LogGameRestarting();
             WaitTime(RestartingTimeInMs);
+
             Drawer.Erase();
+
             RefreshPlayerFields();
         }
 
