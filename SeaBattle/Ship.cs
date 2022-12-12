@@ -47,27 +47,20 @@ namespace SeaBattle
 
         public bool Belongs(FieldCoords coords)
         {
-            foreach (var _coords in _location)
-                if (_coords.X == coords.X 
-                 && _coords.Y == coords.Y)
-                    return true;
-
-            return false;
+            return Belongs(coords.X, coords.Y);
         }
 
         public List<FieldCoords> GetDestroyFrame()
         {
-            var result = new List<FieldCoords>();
+            var frame = new List<FieldCoords>();
 
-            foreach (var elem in _location)
-            {//
-                if (Field.IsInFieldRange(elem.X + 1, elem.Y) && !Belongs(new FieldCoords(elem.X + 1, elem.X + 1)))
-                    result.Add(elem);
-                if (Field.IsInFieldRange(elem.X, elem.Y + 1) && !Belongs(new FieldCoords(elem.X, elem.Y + 1)))
-                    result.Add(elem);
-            }
+            foreach (var _coords in _location)
+                for (int x = _coords.X - 1; x <= _coords.X + 1; x++)
+                    for (int y = _coords.Y - 1; y <= _coords.Y + 1; y++)
+                        if (Field.IsInFieldRange(x, y) && !Belongs(x, y))
+                            frame.Add(new FieldCoords(x, y));
 
-            return result;
+            return frame;
         }
 
         private void Reproduce(FieldCoords coords, FieldMarks[,] searchField)
@@ -86,6 +79,16 @@ namespace SeaBattle
                             Reproduce(new FieldCoords(x, y), searchField);
                 }
             }
+        }
+
+        private bool Belongs(int x, int y)
+        {
+            foreach (var _coords in _location)
+                if (x == _coords.X
+                 && y == _coords.Y)
+                    return true;
+
+            return false;
         }
     }
 }

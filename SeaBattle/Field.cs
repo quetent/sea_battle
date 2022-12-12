@@ -55,7 +55,7 @@
         {
             if (this[coords.Y, coords.X] is FieldMarks.Ship)
             {
-                var shipExists = GetShipByCoords(coords, out Ship? ship);
+                var shipExists = GetShipByCoords(coords.Reverse(), out Ship? ship);
 
                 if (shipExists)
                     ship.Hits++;
@@ -107,9 +107,7 @@
         private void SetDestroyFrame(List<FieldCoords> frame)
         {
             foreach (var coords in frame)
-            {
-                _field[coords.Y, coords.X] = FieldMarks.Miss;
-            }
+                _field[coords.X, coords.Y] = FieldMarks.Miss;
         }
 
         private static bool IsFieldInputFileCorrupted(string[] fieldAsLines)

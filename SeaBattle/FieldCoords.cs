@@ -25,6 +25,11 @@
             return $"({_x}, {_y})";
         }
 
+        public FieldCoords Reverse()
+        {
+            return new FieldCoords(_y, _x);
+        }
+
         public static bool IsValidCoordX(int x)
         {
             return x.InRange(0, LettersCount - 1);

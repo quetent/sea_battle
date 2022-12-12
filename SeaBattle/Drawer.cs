@@ -1,8 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using System;
-using System.Drawing;
-
-namespace SeaBattle
+﻿namespace SeaBattle
 {
     internal static class Drawer
     {
