@@ -4,12 +4,22 @@
     {
         public static Command ReadCommand(out string rawOutput)
         {
-            ConsoleForegroundColor = ConsoleColor.White;
-            Write(">>> "); //
+            Write(">>> ");
 
             rawOutput = ReadLine().ToUpper();
             
             return ParseCommand(rawOutput);
+        }
+
+        public static void WaitButtonPress()
+        {
+            ReadKey();
+        }
+
+        public static void WaitButtonPress(string message)
+        {
+            Write(message);
+            WaitButtonPress();
         }
 
         private static Command ParseCommand(string? command)
@@ -43,7 +53,8 @@
 
         private static bool IsCommandEmpty(string? command)
         {
-            return string.IsNullOrWhiteSpace(command) || string.IsNullOrEmpty(command);
+            return string.IsNullOrWhiteSpace(command) 
+                || string.IsNullOrEmpty(command);
         }
     }
 }

@@ -32,6 +32,11 @@
             WriteLine();
         }
 
+        public static void Erase()
+        {
+            Clear();
+        }
+
         private static void Draw(object? obj)
         {
             Draw(obj, AutoDetermineColor(obj));

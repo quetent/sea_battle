@@ -10,6 +10,10 @@ namespace SeaBattle
         private readonly Player _player2;
         public string Player2 { get { return _player2.Name; } }
 
+        private bool _isStopped;
+
+        private static readonly Random random = new(); 
+
         public Game(Player player1, Player player2)
         {
             _player1 = player1;
@@ -18,28 +22,69 @@ namespace SeaBattle
 
         public void Start()
         {
-            while (true)
+            do
             {
-                var currentPlayer = _player1;
-                var playerOpponent = _player2;
+                var switching = random.Next(0, 2);
+                var attackPlayer = SwitchPlayers(ref switching);
+                var isNeedSwitching = false;
+                var isRestarted = false;
 
-                Drawer.DrawFields(currentPlayer.AttackField, currentPlayer.DefenseField);
+                while (!IsGameEnded())
+                {
+                    if (isNeedSwitching)
+                        attackPlayer = SwitchPlayers(ref switching);
 
-                var turnCommand = currentPlayer.Turn();
+                    OpenTurn(attackPlayer);
 
-                ProcessCommand(turnCommand, currentPlayer, playerOpponent);
+                    var turnCommand = attackPlayer.Turn();
+                    WaitTime(CommandDelayInMs);
 
-                //Drawer.DrawFields(currentPlayer.AttackField, currentPlayer.DefenseField);
-                Drawer.DrawRepeatedEmptyLine(2);
-            }
+                    ProcessCommand(turnCommand, attackPlayer, ref isNeedSwitching);
+
+                    if (IsGameBreak(turnCommand))
+                    {
+                        isRestarted = turnCommand.Type is CommandsEnum.Restart;
+                        break;
+                    }
+
+                    CloseTurn(attackPlayer);
+                }
+
+                if (!isRestarted && !_isStopped)
+                    Restart();
+            } while (!_isStopped);
+
+            Drawer.DrawLine();
+            Logger.LogGameStopping();
         }
 
-        private void ProcessCommand(Command command, Player attacker, Player defenser)
+        public void Restart()
+        {
+            Drawer.Erase();
+            Logger.LogRefreshFieldsReady();
+            CommandReader.WaitButtonPress();
+            Logger.LogGameRestarting();
+            WaitTime(RestartingTimeInMs);
+            Drawer.Erase();
+            RefreshPlayerFields();
+        }
+
+        public void Stop()
+        {
+            _isStopped = true;
+        }
+
+        private static void Wait()
+        {
+            CommandReader.WaitButtonPress("... ");
+        }
+
+        private void ProcessCommand(Command command, Player attacker, ref bool isNeedSwitching)
         {
             switch (command.Type)
             {
                 case CommandsEnum.SimpleAttack:
-                    ExecuteAttackCommand(attacker.LastAttackCoords, defenser.DefenseField);
+                    ExecuteAttackCommand(attacker.LastAttackCoords, attacker.AttackField, ref isNeedSwitching);
                     break;
                 case CommandsEnum.Restart:
                     Restart();
@@ -48,45 +93,74 @@ namespace SeaBattle
                     Stop();
                     break;
                 case CommandsEnum.Invalid:
-                    LogInvalidCommand();
+                    isNeedSwitching = false;
+                    Logger.LogInvalidCommand();
                     break;
                 case CommandsEnum.Empty:
-                    LogEmptyCommand();
+                    Logger.LogEmptyCommand();
                     break;
                 default:
-                    LogUnknownCommand();
+                    Logger.LogUnknownCommand();
                     break;
             }
         }
 
-        public static void ExecuteAttackCommand(FieldCoords coords, Field attackField)
+        private static void ExecuteAttackCommand(FieldCoords coords, Field defenseField, ref bool isNeedSwitching)
         {
-            attackField.ProduceAttack(coords);
+            defenseField.ProduceAttack(coords, out isNeedSwitching);
         }
 
-        public static void LogInvalidCommand()
+        private Player SwitchPlayers(ref int switching)
         {
-            Logger.Log($"< {CommandsEnum.Invalid} command >", ConsoleColor.DarkRed);
+            var attackPlayer = switching % 2 == 0 ? _player1 : _player2;
+
+            switching++;
+
+            return attackPlayer;
         }
 
-        public static void LogEmptyCommand()
+        private bool IsGameEnded()
         {
-            Logger.Log($"< {CommandsEnum.Empty} command >", ConsoleColor.DarkRed);
+            if (_player1.DefenseField.IsAllShipsDestroyed() 
+             || _player2.DefenseField.IsAllShipsDestroyed())
+                return true;
+
+            return false;
         }
 
-        public static void LogUnknownCommand()
+        private static bool IsGameBreak(Command command)
         {
-            Logger.Log($"< {CommandsEnum.Unknown} command >", ConsoleColor.DarkRed);
+            return command.Type is CommandsEnum.Stop
+                || command.Type is CommandsEnum.Restart;
         }
 
-        public void Restart()
+        private void RefreshPlayerFields()
         {
-
+            _player1.DefenseField.ParseFieldFromFile(_player1.FilePath);
+            _player2.DefenseField.ParseFieldFromFile(_player2.FilePath);
         }
 
-        public void Stop()
+        private static void WaitTime(int milliseconds)
         {
-
+            Thread.Sleep(milliseconds);
         }
+
+        private static void OpenTurn(Player player)
+        {
+            Logger.LogPlayerTurn(player);
+            Drawer.DrawLine();
+
+            Drawer.DrawFields(player.AttackField, player.DefenseField);
+            Drawer.DrawLine();
+        }
+
+        private static void CloseTurn(Player player)
+        {
+            Drawer.DrawLine();
+            Drawer.DrawFields(player.AttackField, player.DefenseField);
+            Wait();
+            Drawer.Erase();
+        }
+
     }
 }

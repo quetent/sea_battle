@@ -51,29 +51,36 @@
             return false;
         }
 
-        public void ProduceAttack(FieldCoords coords)
+        public void ProduceAttack(FieldCoords coords, out bool isNeedSwitching)
         {
             if (this[coords.Y, coords.X] is FieldMarks.Ship)
             {
                 var shipExists = GetShipByCoords(coords.Reverse(), out Ship? ship);
 
                 if (shipExists)
-                    ship.Hits++;
+                {
+                    ship.Hit();
+
+                    if (ship.IsDestroyed())
+                        SetDestroyFrame(ship.GetDestroyFrame());
+                }
 
                 this[coords.Y, coords.X] = FieldMarks.Hit;
-
-                if (shipExists && ship.IsDestroyed())
-                {
-                    var frame = ship.GetDestroyFrame();
-                    SetDestroyFrame(frame);
-                }
+                isNeedSwitching = false;
             }
             else
+            {
+
                 this[coords.Y, coords.X] = FieldMarks.Miss;
+                isNeedSwitching = true;
+            }
         }
 
         public void ParseFieldFromFile(FileInfo file)
         {
+            if (_ships.Count != 0)
+                _ships.Clear();
+                    
             var fieldAsLines = File.ReadAllLines(file.FullName);
 
             if (IsFieldInputFileCorrupted(fieldAsLines))
@@ -104,6 +111,17 @@
             return _field.GetLength(dimension);
         }
 
+        public bool IsAllShipsDestroyed()
+        {
+            var destroyings = 0;
+
+            foreach (var ship in _ships)
+                if (ship.IsDestroyed())
+                    destroyings++;
+
+            return destroyings == _ships.Count;
+        }
+
         private void SetDestroyFrame(List<FieldCoords> frame)
         {
             foreach (var coords in frame)
@@ -117,11 +135,6 @@
                     return true;
 
             return fieldAsLines.Length != NumbersCount + 1;
-        }
-
-        private void IncrementShipHits(FieldCoords coords)
-        {
-
         }
 
         private bool GetShipByCoords(FieldCoords coords, out Ship? ship)

@@ -14,14 +14,19 @@
         private readonly Field _attackField;
         public Field AttackField { get { return _attackField; } }
 
+        private readonly FileInfo _filePath;
+        public FileInfo FilePath { get { return _filePath; } }
+
         public Player(string name, string filePath, Field defenseField, Field attackField)
         {
             _name = name;
 
             _attackField = attackField;
 
+            _filePath = new FileInfo(filePath);
+
             _defenseField = defenseField;
-            _defenseField.ParseFieldFromFile(new FileInfo(filePath));
+            _defenseField.ParseFieldFromFile(_filePath);
         }
 
         public Command Turn()

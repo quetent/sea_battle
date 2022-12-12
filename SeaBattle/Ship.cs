@@ -8,17 +8,7 @@ namespace SeaBattle
         public List<FieldCoords> Location { get { return _location.Copy(); } }
 
         private int _hits;
-        public int Hits 
-        { 
-            get 
-            { 
-                return _hits; 
-            }
-            set
-            {
-                _hits = value;
-            }
-        }
+        public int Hits { get { return _hits; } }
 
         public int Size { get { return _location.Count; } }
 
@@ -48,6 +38,11 @@ namespace SeaBattle
         public bool Belongs(FieldCoords coords)
         {
             return Belongs(coords.X, coords.Y);
+        }
+
+        public void Hit()
+        {
+            _hits++;
         }
 
         public List<FieldCoords> GetDestroyFrame()
