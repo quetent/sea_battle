@@ -61,5 +61,10 @@
         {
             Log($"< {CommandsEnum.Unknown} command >", ConsoleColor.DarkRed);
         }
+
+        public static void LogWinner(Player player, int gameNumber)
+        {
+            Log($"< {player.Name} has won game #{gameNumber} >", WinnerColor);
+        }
     }
 }

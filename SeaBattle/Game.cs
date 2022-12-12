@@ -4,6 +4,8 @@ namespace SeaBattle
 {
     internal class Game
     {
+        private int _gamesCount;
+
         private readonly Player _player1;
         public string Player1 { get { return _player1.Name; } }
 
@@ -22,12 +24,14 @@ namespace SeaBattle
 
         public void Start()
         {
-            do
+            while (!_isStopped)
             {
+                _gamesCount++;
+
                 var switching = random.Next(0, 2);
                 var attackPlayer = SwitchPlayers(ref switching);
                 var isNeedSwitching = false;
-                var isRestarted = false;
+                var isNeedRestarting = false;
 
                 while (!IsGameEnded())
                 {
@@ -43,19 +47,24 @@ namespace SeaBattle
 
                     if (IsGameBreak(turnCommand))
                     {
-                        isRestarted = turnCommand.Type is CommandsEnum.Restart;
+                        isNeedRestarting = turnCommand.Type is CommandsEnum.Restart;
                         break;
                     }
 
                     CloseTurn(attackPlayer);
+
+                    if (IsGameEnded())
+                    {
+                        DeclareWinner(attackPlayer);
+                        isNeedRestarting = true;
+                    }
                 }
 
-                if (!isRestarted && !_isStopped)
+                if (!isNeedRestarting && !_isStopped)
                     Restart();
-            } while (!_isStopped);
+            }
 
-            Drawer.DrawLine();
-            Logger.LogGameStopping();
+            InitiateGameStop();
         }
 
         public void Restart()
@@ -72,6 +81,12 @@ namespace SeaBattle
         public void Stop()
         {
             _isStopped = true;
+        }
+
+        private static void InitiateGameStop()
+        {
+            Drawer.DrawLine();
+            Logger.LogGameStopping();
         }
 
         private static void Wait()
@@ -162,5 +177,10 @@ namespace SeaBattle
             Drawer.Erase();
         }
 
+        private void DeclareWinner(Player player)
+        {
+            Logger.LogWinner(player, _gamesCount);
+            CommandReader.WaitButtonPress("... ");
+        }
     }
 }

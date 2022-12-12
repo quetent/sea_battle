@@ -24,6 +24,7 @@
         public static readonly ConsoleColor PlayerCaptionColor = ConsoleColor.DarkYellow;
 
         public static readonly ConsoleColor PlayerTurnColor = ConsoleColor.DarkYellow;
+        public static readonly ConsoleColor WinnerColor = ConsoleColor.Cyan;
 
         public static ConsoleColor ConsoleForegroundColor { set { ForegroundColor = value; } }
         public static void ResetConsoleForegroundColor() => ConsoleForegroundColor = ConsoleColor.White;
