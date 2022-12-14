@@ -72,6 +72,7 @@ namespace SeaBattle
         public void Restart()
         {
             Drawer.Erase();
+            Logger.LogPrepareRestartingGame();
             Logger.LogRefreshFieldsReady();
 
             CommandReader.WaitButtonPress();

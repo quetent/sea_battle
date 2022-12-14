@@ -37,6 +37,11 @@
             Log("Restarting game...");
         }
 
+        public static void LogPrepareRestartingGame()
+        {
+            Log("Preparing to restart the game");
+        }
+
         public static void LogGameStopping()
         {
             Log("< Game was stopped >", ConsoleColor.DarkRed);
