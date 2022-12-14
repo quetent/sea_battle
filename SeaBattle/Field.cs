@@ -12,10 +12,10 @@
         static Field()
         {
             if (!LettersCount.InRange(1, AlphabetSize))
-                throw new Exception($"{nameof(LettersCount)} should be in the range from 1 to 25");
+                throw new ArgumentException($"settings argument should be in the range from 1 to 25", nameof(LettersCount));
 
-            if (!NumbersCount.InRange(1, NumbersCount))
-                throw new Exception($"{nameof(NumbersCount)} should be more than 0");
+            if (NumbersCount < 1)
+                throw new ArgumentException($"settings argument should be more than 0", nameof(NumbersCount));
         }
 
         public Field()
@@ -84,7 +84,7 @@
             var fieldAsLines = File.ReadAllLines(file.FullName);
 
             if (IsFieldInputFileCorrupted(fieldAsLines))
-                throw new FileLoadException("Field input file is corrupted");
+                throw new FileLoadException("Input file is corrupted", nameof(file.FullName));
 
             for (int i = 1; i < fieldAsLines.Length; i++)
             {
