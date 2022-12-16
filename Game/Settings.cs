@@ -6,6 +6,7 @@
         public static readonly string StopCommand = "STOP";
 
         public static readonly string FieldFilename = "fieldPlayer";
+        public static readonly string FilesLocationDir = @"..\..\..\..\";
 
         public static readonly int RestartingTimeInMs = 1000;
         public static readonly int CommandDelayInMs = 150;

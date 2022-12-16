@@ -4,18 +4,21 @@
     {
         static void Main()
         {
-            var player1Field = new Field();
-            var player2Field = new Field();
+            var playerField1 = new Field();
+            var playerField2 = new Field();
+
+            var fieldFilepath1 = $@"{FilesLocationDir}\{FieldFilename}1.txt";
+            var fieldFilepath2 = $@"{FilesLocationDir}\{FieldFilename}2.txt";
 
             var player1 = new Player("Awen",
-                                    @"..\\..\\..\\..\\SeaBattle\\playerFieldTesting1.txt",
-                                    player1Field,
-                                    player2Field);
+                                    fieldFilepath1,
+                                    playerField1,
+                                    playerField2);
 
             var player2 = new Player("Darya",
-                                    @"..\\..\\..\\..\\SeaBattle\\playerFieldTesting2.txt",
-                                    player2Field,
-                                    player1Field);
+                                    fieldFilepath2,
+                                    playerField2,
+                                    playerField1);
 
             new Game(player1, player2).Start();
         }

@@ -5,17 +5,17 @@
         static void Main()
         {
             var fileName = FieldFilename;
-            var filesLocationDir = @"..\..\..\..\";
+            var filesLocationDir = FilesLocationDir;
 
             var filename1 = $"{fileName}1.txt";
             var filename2 = $"{fileName}2.txt";
 
             LogAndCreateFiles(filesLocationDir, 
-              filename1, filename2);
+                              filename1, filename2);
         }
 
         private static void LogAndCreateFiles(string filesLocationDir,
-                              string filename1, string filename2)
+                                              string filename1, string filename2)
         {
             Log("Creating files...");
             WaitTime(FileCreatingTimeInMs);
@@ -31,7 +31,7 @@
         private static void CreateFieldPatternFiles(string filesLocationDir, 
                                                     string filename1, string filename2) 
         {
-            filesLocationDir = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), filesLocationDir));
+            filesLocationDir = FileCreator.GetFullPath(filesLocationDir);
 
             var filepath1 = Path.Combine(filesLocationDir, filename1);
             var filepath2 = Path.Combine(filesLocationDir, filename2);

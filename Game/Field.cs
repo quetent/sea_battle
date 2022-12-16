@@ -94,6 +94,10 @@
                     var character = line[j];
                     if (IsCharacterFieldMark(character))
                     {
+                        if (character is not (char)FieldMarks.Ship
+                         && character is not (char)FieldMarks.Empty)
+                            throw new FileLoadException("Input file is corrupted", nameof(file.FullName));
+
                         (var cX, var cY) = (i - 1, j - 1);
 
                         _field[cX, cY] = (FieldMarks)character;

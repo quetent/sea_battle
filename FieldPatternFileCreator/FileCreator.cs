@@ -10,6 +10,11 @@
             DumpToFile(fileInfo, field);
         }
 
+        public static string GetFullPath(string filesLocationDir)
+        {
+            return Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), filesLocationDir));
+        }
+
         private static void DumpToFile(FileInfo fileInfo, IEnumerable<string> lines)
         {
             File.WriteAllLines(fileInfo.FullName, lines);
