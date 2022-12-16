@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 
-namespace SeaBattle
+namespace Game
 {
-    internal class Game
+    public class Game
     {
         private int _gamesCount;
 
@@ -90,6 +90,11 @@ namespace SeaBattle
             _isStopped = true;
         }
 
+        public static void WaitTime(int milliseconds)
+        {
+            Thread.Sleep(milliseconds);
+        }
+
         private static void InitiateGameStop()
         {
             Drawer.DrawLine();
@@ -160,11 +165,6 @@ namespace SeaBattle
         {
             _player1.DefenseField.ParseFieldFromFile(_player1.FilePath);
             _player2.DefenseField.ParseFieldFromFile(_player2.FilePath);
-        }
-
-        private static void WaitTime(int milliseconds)
-        {
-            Thread.Sleep(milliseconds);
         }
 
         private static void OpenTurn(Player player)

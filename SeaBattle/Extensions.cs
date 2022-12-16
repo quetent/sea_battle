@@ -1,4 +1,4 @@
-﻿namespace SeaBattle
+﻿namespace Game
 {
     internal static class IntExtensions
     {

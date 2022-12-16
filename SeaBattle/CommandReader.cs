@@ -1,6 +1,6 @@
-﻿namespace SeaBattle
+﻿namespace Game
 {
-    internal static class CommandReader
+    public static class CommandReader
     {
         public static Command ReadCommand(out string rawOutput)
         {

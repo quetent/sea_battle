@@ -1,6 +1,6 @@
-﻿namespace SeaBattle
+﻿namespace Game
 {
-    internal readonly struct FieldCoords
+    public readonly struct FieldCoords
     {
         private readonly int _x;
         public int X { get { return _x; } }

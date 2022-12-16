@@ -1,6 +1,6 @@
-﻿namespace SeaBattle
+﻿namespace Game
 {
-    internal enum CommandsEnum
+    public enum CommandsEnum
     {
         SimpleAttack,
         Restart,

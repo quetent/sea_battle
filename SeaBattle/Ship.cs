@@ -1,8 +1,8 @@
 ﻿using System.Drawing;
 
-namespace SeaBattle
+namespace Game
 {
-    internal class Ship
+    public class Ship
     {
         private readonly List<FieldCoords> _location;
         public List<FieldCoords> Location { get { return _location.Copy(); } }

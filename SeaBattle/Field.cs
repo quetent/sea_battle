@@ -1,6 +1,6 @@
-﻿namespace SeaBattle
+﻿namespace Game
 {
-    internal class Field
+    public class Field
     {
         private readonly List<Ship> _ships;
         public List<Ship> Ships { get { return _ships.Copy(); } }

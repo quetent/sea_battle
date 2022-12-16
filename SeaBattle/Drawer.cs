@@ -1,23 +1,23 @@
-﻿namespace SeaBattle
+﻿namespace Game
 {
     internal static class Drawer
     {
         public static void DrawFields(Field attackField, Field defenseField) //
         {
             DrawFieldsLettersLine();
-            DrawRepeatedEmptyLine(Axes_indent.Length);
+            DrawRepeatedEmptyLine(AxesIndent.Length);
             DrawNumbersAndFields(attackField, defenseField);
-            DrawPlayerCaption(Indent_from_digit + Axes_indent, "< Enemy >");
-            DrawPlayerCaption(Indent_from_digit + Axes_indent + Indent_between_fields + " ", "< You >");
+            DrawPlayerCaption(IndentFromDigit + AxesIndent, "< Enemy >");
+            DrawPlayerCaption(IndentFromDigit + AxesIndent + IndentBetweenFields + " ", "< You >");
             DrawLine();
         }
 
         public static void DrawField(Field field) //
         {
             DrawFieldLettersLine();
-            DrawRepeatedEmptyLine(Axes_indent.Length);
+            DrawRepeatedEmptyLine(AxesIndent.Length);
             DrawNumbersAndField(field);
-            DrawPlayerCaption(Indent_from_digit + Axes_indent, "< Enemy >");
+            DrawPlayerCaption(IndentFromDigit + AxesIndent, "< Enemy >");
             DrawLine();
         }
 
@@ -52,7 +52,7 @@
         private static void DrawField(Field field, int coordNumber, bool isSingleField = true, bool hideShips = false)
         {
             if (!isSingleField)
-                Draw(coordNumber + Axes_indent);
+                Draw(coordNumber + AxesIndent);
 
             for (int y = 0; y < field.GetLength(1); y++)
             {
@@ -69,23 +69,23 @@
         private static void DrawFieldsLettersLine()
         {
             DrawFieldLettersLine();
-            Draw(Indent_between_fields);
+            Draw(IndentBetweenFields);
             DrawFieldLettersLine();
         }
 
         private static void DrawFieldLettersLine()
         {
-            Draw(Indent_from_digit + Axes_indent);
+            Draw(IndentFromDigit + AxesIndent);
 
             for (int i = 0; i < LettersCount; i++)
-                Draw($"{Convert.ToChar(i + 65)}");
+                Draw($"{Convert.ToChar(i + CharacterOffset)}");
         }
 
         private static void DrawNumbersAndField(Field field)
         {
             for (int i = 0; i < field.GetLength(0); i++)
             {
-                Draw(i + Axes_indent);
+                Draw(i + AxesIndent);
                 DrawField(field, i, true, true);
                 DrawLine();
             }
@@ -96,7 +96,7 @@
             for (int i = 0; i < attackField.GetLength(0); i++)
             {
                 DrawField(attackField, i, false, true);
-                Draw(Indent_between_fields);
+                Draw(IndentBetweenFields);
                 DrawField(defenseField, i, false, false);
 
                 DrawLine();

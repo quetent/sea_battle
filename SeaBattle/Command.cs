@@ -1,6 +1,6 @@
-﻿namespace SeaBattle
+﻿namespace Game
 {
-    internal readonly struct Command
+    public readonly struct Command
     {
         private readonly CommandsEnum _type;
         public CommandsEnum Type { get { return _type; } }

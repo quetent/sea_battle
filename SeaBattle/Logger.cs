@@ -1,6 +1,6 @@
-﻿namespace SeaBattle
+﻿namespace Game
 {
-    internal static class Logger
+    public static class Logger
     {
         public static void Log(string message)
         {

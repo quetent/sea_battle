@@ -1,6 +1,6 @@
-﻿namespace SeaBattle
+﻿namespace Game
 {
-    internal class Player
+    public class Player
     {
         private readonly string _name;
         public string Name { get { return _name; } }

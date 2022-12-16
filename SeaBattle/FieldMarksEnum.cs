@@ -1,6 +1,6 @@
-﻿namespace SeaBattle
+﻿namespace Game
 {
-    internal enum FieldMarks
+    public enum FieldMarks
     {
         Ship = '#',
         Miss = '*',

@@ -1,2 +1,2 @@
 ﻿global using static System.Console;
-global using static SeaBattle.Settings;
+global using static Game.Settings;
