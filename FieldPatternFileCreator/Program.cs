@@ -1,6 +1,4 @@
-﻿using FieldFileCreator;
-
-namespace FieldPatternFileCreator
+﻿namespace FieldPatternFileCreator
 {
     internal class Program
     {

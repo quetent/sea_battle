@@ -28,8 +28,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\projects\\cs projects\\SeaBattle\\SeaBattle\\Game.csproj": {
-                "projectPath": "D:\\projects\\cs projects\\SeaBattle\\SeaBattle\\Game.csproj"
+              "D:\\projects\\cs projects\\SeaBattle\\Game\\Game.csproj": {
+                "projectPath": "D:\\projects\\cs projects\\SeaBattle\\Game\\Game.csproj"
               }
             }
           }
@@ -63,14 +63,14 @@
         }
       }
     },
-    "D:\\projects\\cs projects\\SeaBattle\\SeaBattle\\Game.csproj": {
+    "D:\\projects\\cs projects\\SeaBattle\\Game\\Game.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\projects\\cs projects\\SeaBattle\\SeaBattle\\Game.csproj",
+        "projectUniqueName": "D:\\projects\\cs projects\\SeaBattle\\Game\\Game.csproj",
         "projectName": "Game",
-        "projectPath": "D:\\projects\\cs projects\\SeaBattle\\SeaBattle\\Game.csproj",
+        "projectPath": "D:\\projects\\cs projects\\SeaBattle\\Game\\Game.csproj",
         "packagesPath": "C:\\Users\\Ivan\\.nuget\\packages\\",
-        "outputPath": "D:\\projects\\cs projects\\SeaBattle\\SeaBattle\\obj\\",
+        "outputPath": "D:\\projects\\cs projects\\SeaBattle\\Game\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Ivan\\AppData\\Roaming\\NuGet\\NuGet.Config",

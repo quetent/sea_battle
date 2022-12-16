@@ -1,4 +1,4 @@
-﻿namespace FieldFileCreator
+﻿namespace FieldPatternFileCreator
 {
     internal static class FileCreator
     {

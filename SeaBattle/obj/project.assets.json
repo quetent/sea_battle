@@ -1,30 +1,11 @@
 {
   "version": 3,
   "targets": {
-    "net6.0": {
-      "Game/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v6.0",
-        "compile": {
-          "bin/placeholder/Game.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Game.dll": {}
-        }
-      }
-    }
+    "net6.0": {}
   },
-  "libraries": {
-    "Game/1.0.0": {
-      "type": "project",
-      "path": "../Game/Game.csproj",
-      "msbuildProject": "../Game/Game.csproj"
-    }
-  },
+  "libraries": {},
   "projectFileDependencyGroups": {
-    "net6.0": [
-      "Game >= 1.0.0"
-    ]
+    "net6.0": []
   },
   "packageFolders": {
     "C:\\Users\\Ivan\\.nuget\\packages\\": {}
@@ -32,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\projects\\cs projects\\SeaBattle\\FieldPatternFileCreator\\FieldPatternFileCreator.csproj",
-      "projectName": "FieldPatternFileCreator",
-      "projectPath": "D:\\projects\\cs projects\\SeaBattle\\FieldPatternFileCreator\\FieldPatternFileCreator.csproj",
+      "projectUniqueName": "D:\\projects\\cs projects\\SeaBattle\\SeaBattle\\Game.csproj",
+      "projectName": "Game",
+      "projectPath": "D:\\projects\\cs projects\\SeaBattle\\SeaBattle\\Game.csproj",
       "packagesPath": "C:\\Users\\Ivan\\.nuget\\packages\\",
-      "outputPath": "D:\\projects\\cs projects\\SeaBattle\\FieldPatternFileCreator\\obj\\",
+      "outputPath": "D:\\projects\\cs projects\\SeaBattle\\SeaBattle\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Ivan\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -52,11 +33,7 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {
-            "D:\\projects\\cs projects\\SeaBattle\\Game\\Game.csproj": {
-              "projectPath": "D:\\projects\\cs projects\\SeaBattle\\Game\\Game.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {
