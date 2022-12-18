@@ -20,15 +20,6 @@
             DrawLine();
         }
 
-        public static void DrawField(Field field) //
-        {
-            DrawFieldLettersLine();
-            DrawRepeatedEmptyLine(AxesIndent.Length);
-            
-            DrawPlayerCaption(IndentFromDigit + AxesIndent, OpponentCaption);
-            DrawLine();
-        }
-
         public static void DrawRepeatedEmptyLine(int repeats)
         {
             for (int i = 0; i < repeats; i++)
