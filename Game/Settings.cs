@@ -14,8 +14,8 @@
         public static readonly int CommandDelayInMs = 150;
         public static readonly int RestartingTimeInMs = 1000;
 
-        public static readonly int LettersCount = 10;
-        public static readonly int NumbersCount = 10;
+        public static readonly int LettersCount = 5;
+        public static readonly int NumbersCount = 5;
 
         public static readonly int AlphabetSize = 26;
         public static readonly int NumbersSize = 10;

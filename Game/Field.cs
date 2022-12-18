@@ -53,9 +53,9 @@
 
         public void ProduceAttack(FieldCoords coords, out bool isNeedSwitching)
         {
-            if (this[coords.Y, coords.X] is FieldMarks.Ship)
+            if (this[coords.X, coords.Y] is FieldMarks.Ship)
             {
-                var shipExists = GetShipByCoords(coords.Reverse(), out Ship? ship);
+                var shipExists = GetShipByCoords(coords, out Ship? ship);
 
                 if (shipExists)
                 {
@@ -65,13 +65,13 @@
                         SetDestroyFrame(ship.GetDestroyFrame());
                 }
 
-                this[coords.Y, coords.X] = FieldMarks.Hit;
+                this[coords.X, coords.Y] = FieldMarks.Hit;
                 isNeedSwitching = false;
             }
             else
             {
 
-                this[coords.Y, coords.X] = FieldMarks.Miss;
+                this[coords.X, coords.Y] = FieldMarks.Miss;
                 isNeedSwitching = true;
             }
         }
