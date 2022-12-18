@@ -14,7 +14,7 @@
             if (!LettersCount.InRange(1, AlphabetSize))
                 throw new ArgumentException($"settings argument should be in the range from 1 to 25", nameof(LettersCount));
 
-            if (NumbersCount < 1)
+            if (!NumbersCount.InRange(1, NumbersSize))
                 throw new ArgumentException($"settings argument should be more than 0", nameof(NumbersCount));
         }
 
