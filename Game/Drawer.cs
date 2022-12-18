@@ -6,9 +6,17 @@
         {
             DrawFieldsLettersLine();
             DrawRepeatedEmptyLine(AxesIndent.Length);
-            DrawNumbersAndFields(attackField, defenseField);
+
+            if (IsFullDrawing)
+                DrawNumbersAndFields(attackField, defenseField);
+            else
+                DrawNumbersAndField(attackField);
+
             DrawPlayerCaption(IndentFromDigit + AxesIndent, OpponentCaption);
-            DrawPlayerCaption(IndentFromDigit + AxesIndent + IndentBetweenFields + " ", SelfCaption);
+
+            if (IsFullDrawing)
+                DrawPlayerCaption(IndentFromDigit + AxesIndent + IndentBetweenFields + " ", SelfCaption);
+
             DrawLine();
         }
 
@@ -16,7 +24,7 @@
         {
             DrawFieldLettersLine();
             DrawRepeatedEmptyLine(AxesIndent.Length);
-            DrawNumbersAndField(field);
+            
             DrawPlayerCaption(IndentFromDigit + AxesIndent, OpponentCaption);
             DrawLine();
         }
@@ -49,9 +57,9 @@
             ResetConsoleForegroundColor();
         }
 
-        private static void DrawField(Field field, int coordNumber, bool isSingleField = true, bool hideShips = false)
+        private static void DrawField(Field field, int coordNumber, bool hideShips = false)
         {
-            if (!isSingleField)
+            if (IsFullDrawing)
                 Draw(coordNumber + AxesIndent);
 
             for (int y = 0; y < field.GetLength(1); y++)
@@ -69,8 +77,12 @@
         private static void DrawFieldsLettersLine()
         {
             DrawFieldLettersLine();
-            Draw(IndentBetweenFields);
-            DrawFieldLettersLine();
+
+            if (IsFullDrawing)
+            {
+                Draw(IndentBetweenFields);
+                DrawFieldLettersLine();
+            }
         }
 
         private static void DrawFieldLettersLine()
@@ -78,7 +90,7 @@
             Draw(IndentFromDigit + AxesIndent);
 
             for (int i = 0; i < LettersCount; i++)
-                Draw($"{Convert.ToChar(i + CharacterOffset)}");
+                Draw(Convert.ToChar(i + CharacterOffset), LettersColor);
         }
 
         private static void DrawNumbersAndField(Field field)
@@ -86,7 +98,7 @@
             for (int i = 0; i < field.GetLength(0); i++)
             {
                 Draw(i + AxesIndent);
-                DrawField(field, i, true, true);
+                DrawField(field, i, true);
                 DrawLine();
             }
         }
@@ -95,9 +107,13 @@
         {
             for (int i = 0; i < attackField.GetLength(0); i++)
             {
-                DrawField(attackField, i, false, true);
-                Draw(IndentBetweenFields);
-                DrawField(defenseField, i, false, false);
+                DrawField(attackField, i, true);
+
+                if (IsFullDrawing)
+                {
+                    Draw(IndentBetweenFields);
+                    DrawField(defenseField, i, false);
+                }
 
                 DrawLine();
             }

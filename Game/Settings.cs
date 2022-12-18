@@ -22,6 +22,8 @@
 
         public static readonly int CharacterOffset = 65;
 
+        public static readonly bool IsFullDrawing = true;
+
         public static readonly string AxesIndent = new(' ', 0);
         public static readonly string IndentFromDigit = new(' ', 1);
         public static readonly string IndentBetweenFields = new(' ', 5);
