@@ -47,7 +47,7 @@
 
         private static int ParseX(int x)
         {
-            if (!x.InRange(0, NumbersCount - 1))
+            if (!IsValidCoordX(x))
                 throw new ArgumentException($"coordinate character should be 0-{NumbersCount - 1}", nameof(x));
 
             return x;
