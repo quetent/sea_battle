@@ -30,6 +30,12 @@
             private set { _field[index1, index2] = value; }
         }
 
+        public FieldMarks this[FieldCoords coords]
+        {
+            get { return _field[coords.X, coords.Y]; }
+            private set { _field[coords.X, coords.Y] = value; }
+        }
+
         public static bool IsInFieldRange(int x, int y)
         {
             return FieldCoords.IsValidCoordX(x)
@@ -47,7 +53,7 @@
 
         public void ProduceAttack(FieldCoords coords, out bool isNeedSwitching)
         {
-            if (this[coords.X, coords.Y] is FieldMarks.Ship)
+            if (this[coords] is FieldMarks.Ship)
             {
                 var shipExists = GetShipByCoords(coords, out Ship? ship);
 
@@ -59,12 +65,12 @@
                         SetDestroyFrame(ship.GetDestroyFrame());
                 }
 
-                this[coords.X, coords.Y] = FieldMarks.Hit;
+                this[coords] = FieldMarks.Hit;
                 isNeedSwitching = false;
             }
             else
             {
-                this[coords.X, coords.Y] = FieldMarks.Miss;
+                this[coords] = FieldMarks.Miss;
                 isNeedSwitching = true;
             }
         }
@@ -86,8 +92,9 @@
                 for (int j = 1; j < line.Length; j++)
                 {
                     var character = line[j];
+
                     (var cX, var cY) = (i - 1, j - 1);
-                    _field[cX, cY] = (FieldMarks)character;
+                    this[cX, cY] = (FieldMarks)character;
                 }
             }
 
@@ -113,7 +120,7 @@
         private void SetDestroyFrame(List<FieldCoords> frame)
         {
             foreach (var coords in frame)
-                _field[coords.X, coords.Y] = FieldMarks.Miss;
+                this[coords] = FieldMarks.Miss;
         }
 
         private static bool IsFieldInputFileCorrupted(string[] fieldAsLines)
@@ -172,7 +179,7 @@
                 {
                     var coords = new FieldCoords(x, y);
 
-                    if (_field[x, y] is FieldMarks.Ship
+                    if (this[coords] is FieldMarks.Ship
                     && !IsShipDefinedOnField(coords))
                         _ships.Add(new Ship(coords, _field));
                 }
