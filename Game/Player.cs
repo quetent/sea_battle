@@ -37,11 +37,8 @@
             {
                 var attackCoords = new FieldCoords(rawOutput[0], int.Parse(rawOutput[1..]));
 
-                var attackX = attackCoords.X;
-                var attackY = attackCoords.Y;
-
-                if (_attackField[attackY, attackX] is FieldMarks.Empty
-                 || _attackField[attackY, attackX] is FieldMarks.Ship)
+                if (_attackField[attackCoords] is FieldMarks.Empty
+                 || _attackField[attackCoords] is FieldMarks.Ship)
                     _lastAttackCoords = attackCoords;
                 else
                     command = new Command(CommandsEnum.Invalid);
