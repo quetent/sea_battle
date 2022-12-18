@@ -6,11 +6,6 @@
         {
             return number >= bottom && number <= top;
         }
-
-        public static int Length(this int number)
-        {
-            return (int)Math.Floor(Math.Log10(Math.Abs(number)) + 1);
-        }
     }
 
     internal static class StringExtensions
