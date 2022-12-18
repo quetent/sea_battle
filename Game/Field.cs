@@ -26,14 +26,8 @@
 
         public FieldMarks this[int index1, int index2] 
         { 
-            get 
-            { 
-                return _field[index1, index2]; 
-            } 
-            private set
-            {
-                _field[index1, index2] = value;
-            }
+            get { return _field[index1, index2]; } 
+            private set { _field[index1, index2] = value; }
         }
 
         public static bool IsInFieldRange(int x, int y)
@@ -70,7 +64,6 @@
             }
             else
             {
-
                 this[coords.X, coords.Y] = FieldMarks.Miss;
                 isNeedSwitching = true;
             }
@@ -89,21 +82,12 @@
             for (int i = 1; i < fieldAsLines.Length; i++)
             {
                 var line = fieldAsLines[i];
+
                 for (int j = 1; j < line.Length; j++)
                 {
                     var character = line[j];
-                    if (IsCharacterFieldMark(character))
-                    {
-                        if (character is not (char)FieldMarks.Ship
-                         && character is not (char)FieldMarks.Empty)
-                            throw new FileLoadException("Input file is corrupted", nameof(file.FullName));
-
-                        (var cX, var cY) = (i - 1, j - 1);
-
-                        _field[cX, cY] = (FieldMarks)character;
-                    }
-                    else
-                        throw new FileLoadException($"Invalid mark \"{character}\"");
+                    (var cX, var cY) = (i - 1, j - 1);
+                    _field[cX, cY] = (FieldMarks)character;
                 }
             }
 
@@ -137,6 +121,21 @@
             for (int i = 0; i < fieldAsLines.Length; i++)
                 if (fieldAsLines[i].Length != LettersCount + 1)
                     return true;
+
+            for (int i = 1; i < fieldAsLines.Length; i++)
+            {
+                var line = fieldAsLines[i];
+
+                for (int j = 1; j < line.Length; j++)
+                {
+                    var character = line[j];
+
+                    if (!IsCharacterFieldMark(character)
+                     || character is not (char)FieldMarks.Ship
+                     && character is not (char)FieldMarks.Empty)
+                        return true;
+                }
+            }
 
             return fieldAsLines.Length != NumbersCount + 1;
         }
