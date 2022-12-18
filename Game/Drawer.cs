@@ -7,8 +7,8 @@
             DrawFieldsLettersLine();
             DrawRepeatedEmptyLine(AxesIndent.Length);
             DrawNumbersAndFields(attackField, defenseField);
-            DrawPlayerCaption(IndentFromDigit + AxesIndent, "< Enemy >");
-            DrawPlayerCaption(IndentFromDigit + AxesIndent + IndentBetweenFields + " ", "< You >");
+            DrawPlayerCaption(IndentFromDigit + AxesIndent, OpponentCaption);
+            DrawPlayerCaption(IndentFromDigit + AxesIndent + IndentBetweenFields + " ", SelfCaption);
             DrawLine();
         }
 
@@ -17,7 +17,7 @@
             DrawFieldLettersLine();
             DrawRepeatedEmptyLine(AxesIndent.Length);
             DrawNumbersAndField(field);
-            DrawPlayerCaption(IndentFromDigit + AxesIndent, "< Enemy >");
+            DrawPlayerCaption(IndentFromDigit + AxesIndent, OpponentCaption);
             DrawLine();
         }
 
