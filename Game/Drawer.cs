@@ -2,7 +2,7 @@
 {
     internal static class Drawer
     {
-        public static void DrawFields(Field attackField, Field defenseField) //
+        public static void DrawFields(Field attackField, Field defenseField)
         {
             DrawFieldsLettersLine();
             DrawRepeatedEmptyLine(AxesIndent.Length);
@@ -15,7 +15,7 @@
             DrawPlayerCaption(IndentFromDigit + AxesIndent, OpponentCaption);
 
             if (IsFullDrawing)
-                DrawPlayerCaption(IndentFromDigit + AxesIndent + IndentBetweenFields + " ", SelfCaption);
+                DrawPlayerCaption(IndentFromDigit + AxesIndent + IndentBetweenCaptions, SelfCaption);
 
             DrawLine();
         }

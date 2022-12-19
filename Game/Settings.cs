@@ -2,6 +2,8 @@
 {
     public static class Settings
     {
+        public static readonly string WindowTitle = "Sea Battle";
+
         public static readonly string StopCommand = "STOP";
         public static readonly string RestartCommand = "RESTART";
 
@@ -14,8 +16,8 @@
         public static readonly int CommandDelayInMs = 150;
         public static readonly int RestartingTimeInMs = 1000;
 
-        public static readonly int LettersCount = 5;
-        public static readonly int NumbersCount = 5;
+        public static readonly int LettersCount = 7;
+        public static readonly int NumbersCount = 7;
 
         public static readonly int AlphabetSize = 26;
         public static readonly int NumbersSize = 10;
@@ -27,6 +29,7 @@
         public static readonly string AxesIndent = new(' ', 0);
         public static readonly string IndentFromDigit = new(' ', 1);
         public static readonly string IndentBetweenFields = new(' ', 5);
+        public static readonly string IndentBetweenCaptions = IndentBetweenFields.Copy();
 
         public static readonly ConsoleColor DigitsColor = ConsoleColor.White;
         public static readonly ConsoleColor LettersColor = ConsoleColor.DarkBlue;
@@ -44,7 +47,15 @@
 
         static Settings()
         {
+            Title = WindowTitle;
+
             AxesIndent = new string(' ', AxesIndent.Length + 1);
+
+            var delta = OpponentCaption.Length - LettersCount;
+            if (delta > 0)
+                IndentBetweenFields = new string(' ', IndentBetweenFields.Length + delta);
+            else
+                IndentBetweenCaptions += ' ';
         }
     }
 }

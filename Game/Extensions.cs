@@ -1,6 +1,6 @@
 ﻿namespace Game
 {
-    internal static class IntExtensions
+    public static class IntExtensions
     {
         public static bool InRange(this int number, int bottom, int top)
         {
@@ -8,8 +8,13 @@
         }
     }
 
-    internal static class StringExtensions
+    public static class StringExtensions
     {
+        public static string Copy(this string originalStr)
+        {
+            return (string)originalStr.Clone();
+        }
+
         public static bool ConsistsOfLetters(this string str)
         {
             return str.ToCharArray().All(x => char.IsLetter(x));
@@ -21,7 +26,7 @@
         }
     }
 
-    internal static class CharExtensions
+    public static class CharExtensions
     {
         public static bool InRange(this char character, int bottom, int top)
         {
@@ -29,7 +34,7 @@
         }
     }
 
-    internal static class ListExtensions
+    public static class ListExtensions
     {
         public static List<T> Copy<T>(this List<T> list)
         {
