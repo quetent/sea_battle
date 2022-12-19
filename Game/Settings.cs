@@ -4,6 +4,9 @@
     {
         public static readonly string WindowTitle = "Sea Battle";
 
+        public static readonly int WindowWidthReserve = 1;
+        public static readonly int WindowHeightReserve = 5;
+
         public static readonly string StopCommand = "STOP";
         public static readonly string RestartCommand = "RESTART";
 
@@ -16,8 +19,8 @@
         public static readonly int CommandDelayInMs = 150;
         public static readonly int RestartingTimeInMs = 1000;
 
-        public static readonly int LettersCount = 7;
-        public static readonly int NumbersCount = 7;
+        public static readonly int LettersCount = 10;
+        public static readonly int NumbersCount = 10;
 
         public static readonly int AlphabetSize = 26;
         public static readonly int NumbersSize = 10;
@@ -47,15 +50,30 @@
 
         static Settings()
         {
+            AxesIndent = new string(' ', AxesIndent.Length + 1);
+
             Title = WindowTitle;
 
-            AxesIndent = new string(' ', AxesIndent.Length + 1);
+            SetConsoleSize();
+            SetConsoleBuffers();
 
             var delta = OpponentCaption.Length - LettersCount;
             if (delta > 0)
                 IndentBetweenFields = new string(' ', IndentBetweenFields.Length + delta);
             else
                 IndentBetweenCaptions += ' ';
+        }
+
+        private static void SetConsoleSize()
+        {
+            WindowHeight = (NumbersCount + AxesIndent.Length + WindowHeightReserve) * 2;
+            WindowWidth = (LettersCount + AxesIndent.Length + IndentBetweenFields.Length + WindowWidthReserve) * 2;
+        }
+
+        private static void SetConsoleBuffers()
+        {
+            BufferHeight = WindowHeight;
+            BufferWidth = WindowWidth;
         }
     }
 }
