@@ -12,7 +12,7 @@
         static Field()
         {
             if (!LettersCount.InRange(1, AlphabetSize))
-                throw new ArgumentException($"settings argument should be in the range from 1 to 25", nameof(LettersCount));
+                throw new ArgumentException($"settings argument should be in the range from 1 to {AlphabetSize}", nameof(LettersCount));
 
             if (!NumbersCount.InRange(1, NumbersSize))
                 throw new ArgumentException($"settings argument should be in range from 1 to {NumbersSize}", nameof(NumbersCount));
