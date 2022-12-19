@@ -36,9 +36,10 @@
             if (command.Type is CommandsEnum.SimpleAttack)
             {
                 var attackCoords = new FieldCoords(rawOutput[0], int.Parse(rawOutput[1..]));
+                var attackCoordsReversed = attackCoords.Reverse();
 
-                if (_attackField[attackCoords] is FieldMarks.Empty
-                 || _attackField[attackCoords] is FieldMarks.Ship)
+                if (_attackField[attackCoordsReversed] is FieldMarks.Empty
+                 || _attackField[attackCoordsReversed] is FieldMarks.Ship)
                     _lastAttackCoords = attackCoords;
                 else
                     command = new Command(CommandsEnum.Invalid);

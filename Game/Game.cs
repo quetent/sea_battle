@@ -124,9 +124,11 @@ namespace Game
                     Logger.LogInvalidCommand();
                     break;
                 case CommandsEnum.Empty:
+                    isNeedSwitching = false;
                     Logger.LogEmptyCommand();
                     break;
                 default:
+                    isNeedSwitching = false;
                     Logger.LogUnknownCommand();
                     break;
             }
