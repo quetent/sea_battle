@@ -136,7 +136,7 @@ namespace Game
 
         private static void ExecuteAttackCommand(FieldCoords coords, Field defenseField, ref bool isNeedSwitching)
         {
-            defenseField.ProduceAttack(coords.Reverse(), out isNeedSwitching);
+            defenseField.ProduceAttack(coords, out isNeedSwitching);
         }
 
         private Player SwitchPlayers(ref int switching)

@@ -5,7 +5,7 @@
         public static void DrawFields(Field attackField, Field defenseField)
         {
             DrawFieldsLettersLine();
-            DrawRepeatedEmptyLine(AxesIndent.Length);
+            DrawRepeatedEmptyLine(AxesIndent.Length + 1);
 
             if (IsFullDrawing)
                 DrawNumbersAndFields(attackField, defenseField);
@@ -53,15 +53,12 @@
             if (IsFullDrawing)
                 Draw(coordNumber + AxesIndent);
 
-            for (int y = 0; y < field.GetLength(1); y++)
+            for (int y = 0; y < field.GetLength(0); y++)
             {
-                if (hideShips && field[coordNumber, y] is FieldMarks.Ship)
-                {
+                if (hideShips && field[y, coordNumber] is FieldMarks.Ship)
                     Draw((char)FieldMarks.Empty);
-                    continue;
-                }
-                
-                Draw((char)field[coordNumber, y]);
+                else
+                    Draw((char)field[y, coordNumber]);
             }
         }
 
@@ -96,14 +93,14 @@
 
         private static void DrawNumbersAndFields(Field attackField, Field defenseField)
         {
-            for (int i = 0; i < attackField.GetLength(0); i++)
+            for (int i = 0; i < attackField.GetLength(1); i++)
             {
                 DrawField(attackField, i, true);
 
                 if (IsFullDrawing)
                 {
                     Draw(IndentBetweenFields);
-                    DrawField(defenseField, i, false);
+                    DrawField(defenseField, i);
                 }
 
                 DrawLine();

@@ -48,7 +48,7 @@
         private static int ParseX(int x)
         {
             if (!IsValidCoordX(x))
-                throw new ArgumentException($"coordinate character should be 0-{NumbersCount - 1}", nameof(x));
+                throw new ArgumentException($"coordinate character should be 0-{LettersCount - 1}", nameof(x));
 
             return x;
         }
@@ -56,7 +56,7 @@
         private static int ParseX(char x)
         {
             if (!IsValidCoordX(x))
-                throw new ArgumentException("coordinate character should be A-Z", nameof(x));
+                throw new ArgumentException("coordinate character should be a-z", nameof(x));
 
             return x - 65;
         }

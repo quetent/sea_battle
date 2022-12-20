@@ -85,16 +85,14 @@
             if (IsFieldInputFileCorrupted(fieldAsLines))
                 throw new FileLoadException("Input file is corrupted", nameof(file.FullName));
 
-            for (int i = 1; i < fieldAsLines.Length; i++)
+            for (int y = 1; y < fieldAsLines.Length; y++)
             {
-                var line = fieldAsLines[i];
+                var line = fieldAsLines[y]; 
 
-                for (int j = 1; j < line.Length; j++)
+                for (int x = 1; x < line.Length; x++)
                 {
-                    var character = line[j];
-
-                    (var cX, var cY) = (i - 1, j - 1);
-                    this[cX, cY] = (FieldMarks)character;
+                    var character = line[x];
+                    this[x - 1, y - 1] = (FieldMarks)character;
                 }
             }
 

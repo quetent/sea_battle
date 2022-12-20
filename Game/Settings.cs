@@ -4,7 +4,7 @@
     {
         public static readonly string WindowTitle = "Sea Battle";
 
-        public static readonly int WindowWidthReserve = 1;
+        public static readonly int WindowWidthReserve = 5;
         public static readonly int WindowHeightReserve = 5;
 
         public static readonly string StopCommand = "STOP";
@@ -19,8 +19,8 @@
         public static readonly int CommandDelayInMs = 150;
         public static readonly int RestartingTimeInMs = 1000;
 
-        public static readonly int LettersCount = 10;
-        public static readonly int NumbersCount = 10;
+        public static readonly int LettersCount = 7;
+        public static readonly int NumbersCount = 5;
 
         public static readonly int AlphabetSize = 26;
         public static readonly int NumbersSize = 10;
@@ -29,9 +29,9 @@
 
         public static readonly bool IsFullDrawing = true;
 
-        public static readonly string AxesIndent = new(' ', 0);
+        public static readonly string AxesIndent = new(' ', 1);
         public static readonly string IndentFromDigit = new(' ', 1);
-        public static readonly string IndentBetweenFields = new(' ', 5);
+        public static readonly string IndentBetweenFields = new(' ', 1);
         public static readonly string IndentBetweenCaptions = IndentBetweenFields.Copy();
 
         public static readonly ConsoleColor DigitsColor = ConsoleColor.White;
@@ -50,8 +50,6 @@
 
         static Settings()
         {
-            AxesIndent = new string(' ', AxesIndent.Length + 1);
-
             Title = WindowTitle;
 
             SetConsoleSize();
