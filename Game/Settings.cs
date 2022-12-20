@@ -31,7 +31,7 @@
 
         public static readonly string AxesIndent = new(' ', 1);
         public static readonly string IndentFromDigit = new(' ', 1);
-        public static readonly string IndentBetweenFields = new(' ', 1);
+        public static readonly string IndentBetweenFields = new(' ', 5);
         public static readonly string IndentBetweenCaptions = IndentBetweenFields.Copy();
 
         public static readonly ConsoleColor DigitsColor = ConsoleColor.White;
