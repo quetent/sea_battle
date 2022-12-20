@@ -161,10 +161,8 @@
         private bool IsShipDefinedOnField(FieldCoords coords)
         {
             foreach (var ship in _ships)
-            {
                 if (ship.Belongs(coords))
                     return true;
-            }
 
             return false;
         }
