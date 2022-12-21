@@ -29,7 +29,7 @@
             _defenseField.ParseFieldFromFile(_filePath);
         }
 
-        public Command Turn()
+        public virtual Command Turn()
         {
             var command = CommandReader.ReadCommand(out string rawOutput);
 
