@@ -40,7 +40,7 @@
                                    LettersCount, NumbersCount, CharacterOffset);
 
             FileCreator.CreateFile(new FileInfo(filepath2),
-                       LettersCount, NumbersCount, CharacterOffset);
+                                   LettersCount, NumbersCount, CharacterOffset);
         }
     }
 }
