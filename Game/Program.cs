@@ -4,18 +4,26 @@
     {
         static void Main()
         {
+            var player1Name = "Awen";
+            string player2Name;
+
+            if (IsVersusBot)
+                player2Name = "Bot";
+            else
+                player2Name = "Darya";
+
             var playerField1 = new Field();
             var playerField2 = new Field();
 
             var fieldFilepath1 = $@"{FilesLocationDir}\{FieldFilename}1.txt";
             var fieldFilepath2 = $@"{FilesLocationDir}\{FieldFilename}2.txt";
 
-            var player1 = new Player("Awen",
+            var player1 = new Player(player1Name,
                                     fieldFilepath1,
                                     playerField1,
                                     playerField2);
 
-            var player2 = new Player("Darya",
+            var player2 = new Bot(player2Name,
                                     fieldFilepath2,
                                     playerField2,
                                     playerField1);

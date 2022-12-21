@@ -19,8 +19,8 @@
         public static readonly int CommandDelayInMs = 150;
         public static readonly int RestartingTimeInMs = 1000;
 
-        public static readonly int LettersCount = 10;
-        public static readonly int NumbersCount = 10;
+        public static readonly int LettersCount = 5;
+        public static readonly int NumbersCount = 5;
 
         public static readonly int AlphabetSize = 26;
         public static readonly int NumbersSize = 10;
@@ -28,6 +28,7 @@
         public static readonly int CharacterOffset = 65;
 
         public static readonly bool IsFullDrawing = true;
+        public static readonly bool IsVersusBot = true;
 
         public static readonly int AxesIndent = 1;
         public static readonly int IndentFromDigit = 1;
@@ -65,13 +66,13 @@
                 windowIndent = LettersCount;
             }
 
-            SetConsoleSize(delta, windowIndent);
+            SetConsoleSize(windowIndent);
             SetConsoleBuffers();
         }
 
-        private static void SetConsoleSize(int delta, int indent)
+        private static void SetConsoleSize(int indent)
         {
-            var windowHeight = (NumbersCount + AxesIndent).RoundToNearest(15) * 2
+            var windowHeight = (NumbersCount + AxesIndent).RoundToNearest(10) * 2
                               + WindowHeightReserve;
 
             var windowWidth = indent.RoundToNearest(15) * 2

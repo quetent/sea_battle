@@ -5,7 +5,7 @@
         private readonly string _name;
         public string Name { get { return _name; } }
 
-        private FieldCoords _lastAttackCoords;
+        protected FieldCoords _lastAttackCoords;
         public FieldCoords LastAttackCoords { get { return _lastAttackCoords; } }
 
         private readonly Field _defenseField;

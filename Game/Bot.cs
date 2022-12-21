@@ -1,13 +1,20 @@
 ﻿namespace Game
 {
-    internal class Bot : Player
+    public class Bot : Player
     {
+        private static Random _random = new();
+
         public Bot(string name, string filePath, Field defenseField, Field attackField) 
             : base(name, filePath, defenseField, attackField) { }
 
         public override Command Turn()
         {
-            return base.Turn();
+            var x = Convert.ToChar(_random.Next(0, LettersCount) + CharacterOffset);
+            var y = _random.Next(0, NumbersCount);
+
+            _lastAttackCoords = new FieldCoords(x, y);
+
+            return new Command(CommandsEnum.SimpleAttack);
         }
     }
 }
