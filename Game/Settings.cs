@@ -29,10 +29,10 @@
 
         public static readonly bool IsFullDrawing = true;
 
-        public static readonly string AxesIndent = new(' ', 1);
-        public static readonly string IndentFromDigit = new(' ', 1);
-        public static readonly string IndentBetweenFields = new(' ', 5);
-        public static readonly string IndentBetweenCaptions = IndentBetweenFields.Copy();
+        public static readonly int AxesIndent = 1;
+        public static readonly int IndentFromDigit = 1;
+        public static readonly int IndentBetweenFields = 5;
+        public static readonly int IndentBetweenCaptions = IndentBetweenFields;
 
         public static readonly ConsoleColor DigitsColor = ConsoleColor.White;
         public static readonly ConsoleColor LettersColor = ConsoleColor.DarkBlue;
@@ -56,12 +56,12 @@
             var delta = OpponentCaption.Length - LettersCount;
             if (delta > 0)
             {
-                IndentBetweenFields = new(' ', delta + IndentBetweenFields.Length);
-                windowIndent = IndentBetweenFields.Length;
+                IndentBetweenFields = delta + IndentBetweenFields;
+                windowIndent = IndentBetweenFields;
             }
             else
             {
-                IndentBetweenCaptions = new(' ', Math.Abs(delta) + IndentBetweenFields.Length);
+                IndentBetweenCaptions = Math.Abs(delta) + IndentBetweenFields;
                 windowIndent = LettersCount;
             }
 
@@ -71,7 +71,7 @@
 
         private static void SetConsoleSize(int delta, int indent)
         {
-            var windowHeight = (NumbersCount + AxesIndent.Length).RoundToNearest(15) * 2
+            var windowHeight = (NumbersCount + AxesIndent).RoundToNearest(15) * 2
                               + WindowHeightReserve;
 
             var windowWidth = indent.RoundToNearest(15) * 2

@@ -4,18 +4,25 @@
     {
         public static void DrawFields(Field attackField, Field defenseField)
         {
-            DrawFieldsLettersLine();
-            DrawRepeatedEmptyLine(AxesIndent.Length + 1);
+            DrawFieldsLettersLine(CreateWhiteSpaceString(IndentBetweenFields),
+                                  CreateWhiteSpaceString(IndentFromDigit + AxesIndent));
+
+            DrawRepeatedEmptyLine(AxesIndent + 1);
 
             if (IsFullDrawing)
-                DrawNumbersAndFields(attackField, defenseField);
+                DrawNumbersAndFields(attackField, defenseField, 
+                                     CreateWhiteSpaceString(AxesIndent),
+                                     CreateWhiteSpaceString(IndentBetweenFields));
             else
-                DrawNumbersAndField(attackField);
+                DrawNumbersAndField(attackField, CreateWhiteSpaceString(AxesIndent));
 
-            DrawPlayerCaption(IndentFromDigit + AxesIndent, OpponentCaption);
+            DrawPlayerCaption(CreateWhiteSpaceString(IndentFromDigit + AxesIndent), OpponentCaption);
 
             if (IsFullDrawing)
-                DrawPlayerCaption(IndentFromDigit + AxesIndent + IndentBetweenCaptions, SelfCaption);
+                DrawPlayerCaption(CreateWhiteSpaceString(IndentFromDigit 
+                                                       + AxesIndent 
+                                                       + IndentBetweenCaptions), 
+                                                         SelfCaption);
 
             DrawLine();
         }
@@ -48,10 +55,10 @@
             ResetConsoleForegroundColor();
         }
 
-        private static void DrawField(Field field, int coordNumber, bool hideShips = false)
+        private static void DrawField(Field field, int coordNumber, string axesIndent, bool hideShips = false)
         {
             if (IsFullDrawing)
-                Draw(coordNumber + AxesIndent);
+                Draw(coordNumber + axesIndent);
 
             for (int y = 0; y < field.GetLength(0); y++)
             {
@@ -62,45 +69,46 @@
             }
         }
 
-        private static void DrawFieldsLettersLine()
+        private static void DrawFieldsLettersLine(string fieldsIndent, string yAxisIndent)
         {
-            DrawFieldLettersLine();
+            DrawFieldLettersLine(yAxisIndent);
 
             if (IsFullDrawing)
             {
-                Draw(IndentBetweenFields);
-                DrawFieldLettersLine();
+                Draw(fieldsIndent);
+                DrawFieldLettersLine(yAxisIndent);
             }
         }
 
-        private static void DrawFieldLettersLine()
+        private static void DrawFieldLettersLine(string yAxisIndent)
         {
-            Draw(IndentFromDigit + AxesIndent);
+            Draw(yAxisIndent);
 
             for (int i = 0; i < LettersCount; i++)
                 Draw(Convert.ToChar(i + CharacterOffset), LettersColor);
         }
 
-        private static void DrawNumbersAndField(Field field)
+        private static void DrawNumbersAndField(Field field, string axesIndent)
         {
             for (int i = 0; i < field.GetLength(0); i++)
             {
-                Draw(i + AxesIndent);
-                DrawField(field, i, true);
+                Draw(i + axesIndent);
+                DrawField(field, i, axesIndent, true);
                 DrawLine();
             }
         }
 
-        private static void DrawNumbersAndFields(Field attackField, Field defenseField)
+        private static void DrawNumbersAndFields(Field attackField, Field defenseField, 
+                                                 string axesIndent, string fieldsIndent)
         {
             for (int i = 0; i < attackField.GetLength(1); i++)
             {
-                DrawField(attackField, i, true);
+                DrawField(attackField, i, axesIndent, true);
 
                 if (IsFullDrawing)
                 {
-                    Draw(IndentBetweenFields);
-                    DrawField(defenseField, i);
+                    Draw(fieldsIndent);
+                    DrawField(defenseField, i, axesIndent);
                 }
 
                 DrawLine();
@@ -151,6 +159,11 @@
                 color = ConsoleColor.White;
 
             return color;
+        }
+
+        private static string CreateWhiteSpaceString(int length)
+        {
+            return new string(' ', length);
         }
     }
 }
