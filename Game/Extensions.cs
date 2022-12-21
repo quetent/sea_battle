@@ -6,6 +6,11 @@
         {
             return number >= bottom && number <= top;
         }
+
+        public static int RoundToNearest(this int number, int numberOrder)
+        {
+            return number + (numberOrder - number % numberOrder);
+        }
     }
 
     public static class StringExtensions
