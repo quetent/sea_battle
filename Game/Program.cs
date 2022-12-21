@@ -19,14 +19,22 @@
             var fieldFilepath2 = $@"{FilesLocationDir}\{FieldFilename}2.txt";
 
             var player1 = new Player(player1Name,
-                                    fieldFilepath1,
-                                    playerField1,
-                                    playerField2);
+                                     fieldFilepath1,
+                                     playerField1,
+                                     playerField2);
 
-            var player2 = new Bot(player2Name,
-                                    fieldFilepath2,
-                                    playerField2,
-                                    playerField1);
+            Player player2;
+
+            if (IsVersusBot)
+                player2 = new Bot(player2Name,
+                                  fieldFilepath2,
+                                  playerField2,
+                                  playerField1);
+            else
+                player2 = new Player(player2Name,
+                                     fieldFilepath2,
+                                     playerField2,
+                                     playerField1);
 
             new Game(player1, player2).Start();
         }
