@@ -43,12 +43,12 @@
             Clear();
         }
 
-        private static void Draw(object? obj)
+        public static void Draw(object? obj)
         {
             Draw(obj, AutoDetermineColor(obj));
         }
 
-        private static void Draw(object? obj, ConsoleColor color)
+        public static void Draw(object? obj, ConsoleColor color)
         {
             ConsoleForegroundColor = color;
             Write(obj?.ToString());

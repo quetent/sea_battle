@@ -16,6 +16,7 @@
         public static readonly string SelfCaption = "< You >";
         public static readonly string OpponentCaption = "< Enemy >";
 
+        public static readonly int BotCommandEnteringInMs = 350;
         public static readonly int CommandDelayInMs = 150;
         public static readonly int RestartingTimeInMs = 1000;
 
