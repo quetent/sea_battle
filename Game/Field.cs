@@ -130,7 +130,7 @@
                 y = (y + 1) % NumbersCount;
 
                 if (y == mY)
-                    x++;
+                    x = (x + 1) % LettersCount;
             }
         }
 
