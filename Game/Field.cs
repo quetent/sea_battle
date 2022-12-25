@@ -55,15 +55,12 @@
         {
             if (this[coords] is FieldMarks.Ship)
             {
-                var shipExists = GetShipByCoords(coords, out Ship? ship);
+                GetShipByCoords(coords, out Ship? ship);
 
-                if (shipExists)
-                {
-                    ship.Hit();
+                ship.Hit();
 
-                    if (ship.IsDestroyed())
-                        SetDestroyFrame(ship.GetDestroyFrame());
-                }
+                if (ship.IsDestroyed())
+                    SetDestroyFrame(ship.GetDestroyFrame());
 
                 this[coords] = FieldMarks.Hit;
                 isNeedSwitching = false;

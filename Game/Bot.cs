@@ -2,7 +2,7 @@
 {
     public class Bot : Player
     {
-        private static Random _random = new();
+        private static readonly Random _random = new();
 
         public Bot(string name, string filePath, Field defenseField, Field attackField) 
             : base(name, filePath, defenseField, attackField) { }
