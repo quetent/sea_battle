@@ -9,6 +9,8 @@
 
         private readonly FieldMarks[,] _field;
 
+        private static readonly Random _random = new();
+
         static Field()
         {
             if (!LettersCount.InRange(1, AlphabetSize))
@@ -110,6 +112,26 @@
                     destroyings++;
 
             return destroyings == _ships.Count;
+        }
+
+        public FieldCoords GetRandomNotHitOrMissCoords()
+        {
+            var x = _random.Next(0, LettersCount);
+            var y = _random.Next(0, NumbersCount);
+
+            var mY = y;
+
+            while (true)
+            {
+                if (this[x, y] is not FieldMarks.Hit
+                 && this[x, y] is not FieldMarks.Miss)
+                    return new FieldCoords(x, y);
+
+                y = (y + 1) % NumbersCount;
+
+                if (y == mY)
+                    x++;
+            }
         }
 
         private void SetDestroyFrame(List<FieldCoords> frame)

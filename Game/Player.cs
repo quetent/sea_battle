@@ -2,19 +2,19 @@
 {
     public class Player
     {
-        private readonly string _name;
+        protected readonly string _name;
         public string Name { get { return _name; } }
 
         protected FieldCoords _lastAttackCoords;
         public FieldCoords LastAttackCoords { get { return _lastAttackCoords; } }
 
-        private readonly Field _defenseField;
+        protected readonly Field _defenseField;
         public Field DefenseField { get { return _defenseField; } }
 
-        private readonly Field _attackField;
+        protected readonly Field _attackField;
         public Field AttackField { get { return _attackField; } }
 
-        private readonly FileInfo _fieldFile;
+        protected readonly FileInfo _fieldFile;
         public FileInfo FilePath { get { return _fieldFile; } }
 
         public Player(string name, string filePath, Field defenseField, Field attackField)
