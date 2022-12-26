@@ -7,11 +7,21 @@
 
         public override Command Turn()
         {
-            _lastAttackCoords = _attackField.GetRandomNotHitOrMissCoords();
-
+            SetAttackCoords();
             EnterAttackCoords();
 
             return new Command(CommandsEnum.SimpleAttack);
+        }
+
+        private void SetAttackCoords()
+        {
+            
+
+            var coords = _attackField.GetRandomFreeCell();
+
+
+
+            _lastAttackCoords = coords;    
         }
 
         private void EnterAttackCoords()

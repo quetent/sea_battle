@@ -55,7 +55,7 @@
 
         public void ProduceAttack(FieldCoords coords, out bool isNeedSwitching)
         {
-            if (this[coords] is FieldMarks.Ship)
+            if (IsShip(coords))
             {
                 GetShipByCoords(coords, out Ship? ship);
 
@@ -114,7 +114,7 @@
             return destroyings == _ships.Count;
         }
 
-        public FieldCoords GetRandomNotHitOrMissCoords()
+        public FieldCoords GetRandomFreeCell()
         {
             var x = _random.Next(0, LettersCount);
             var y = _random.Next(0, NumbersCount);
@@ -123,8 +123,8 @@
 
             while (true)
             {
-                if (this[x, y] is not FieldMarks.Hit
-                 && this[x, y] is not FieldMarks.Miss)
+                if (!(IsHit(x, y)
+                   && IsMiss(x, y)))
                     return new FieldCoords(x, y);
 
                 y = (y + 1) % NumbersCount;
@@ -132,6 +132,54 @@
                 if (y == mY)
                     x = (x + 1) % LettersCount;
             }
+        }
+
+        public bool GetShipByCoords(FieldCoords coords, out Ship? ship)
+        {
+            foreach (var _ship in _ships)
+                if (_ship.Belongs(coords))
+                {
+                    ship = _ship;
+                    return true;
+                }
+
+            ship = null;
+            return false;
+        }
+
+        public bool IsHit(FieldCoords coords)
+        {
+            return this[coords] is FieldMarks.Hit;
+        }
+
+        public bool IsHit(int x, int y)
+        {
+            return this[x, y] is FieldMarks.Hit;
+        }
+
+        public bool IsMiss(FieldCoords coords)
+        {
+            return this[coords] is FieldMarks.Miss;
+        }
+
+        public bool IsMiss(int x, int y)
+        {
+            return this[x, y] is FieldMarks.Miss;
+        }
+
+        private static bool IsEmpty(char character)
+        {
+            return character is (char)FieldMarks.Empty;
+        }
+
+        private static bool IsShip(char character)
+        {
+            return character is (char)FieldMarks.Ship;
+        }
+
+        private bool IsShip(FieldCoords coords)
+        {
+            return this[coords] is FieldMarks.Ship;
         }
 
         private void SetDestroyFrame(List<FieldCoords> frame)
@@ -155,26 +203,13 @@
                     var character = line[j];
 
                     if (!IsCharacterFieldMark(character)
-                     || character is not (char)FieldMarks.Ship
-                     && character is not (char)FieldMarks.Empty)
+                     || !IsEmpty(character)
+                     && !IsShip(character))
                         return true;
                 }
             }
 
             return fieldAsLines.Length != NumbersCount + 1;
-        }
-
-        private bool GetShipByCoords(FieldCoords coords, out Ship? ship)
-        {
-            foreach (var _ship in _ships)
-                if (_ship.Belongs(coords))
-                {
-                    ship = _ship;
-                    return true;
-                }
-
-            ship = null;
-            return false;
         }
 
         private bool IsShipDefinedOnField(FieldCoords coords)
@@ -194,7 +229,7 @@
                 {
                     var coords = new FieldCoords(x, y);
 
-                    if (this[coords] is FieldMarks.Ship
+                    if (IsShip(coords)
                     && !IsShipDefinedOnField(coords))
                         _ships.Add(new Ship(coords, _field));
                 }
