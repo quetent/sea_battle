@@ -55,10 +55,8 @@
 
         public void ProduceAttack(FieldCoords coords, out bool isNeedSwitching)
         {
-            if (IsShip(coords))
+            if (GetShipByCoords(coords, out Ship? ship))
             {
-                GetShipByCoords(coords, out Ship? ship);
-
                 ship.Hit();
 
                 if (ship.IsDestroyed())
@@ -146,6 +144,11 @@
             ship = null;
             return false;
         }
+
+        //public FieldCoords GetRandomRegionalEmptyCoord(FieldCoords coords)
+        //{
+
+        //}
 
         public bool IsHit(FieldCoords coords)
         {

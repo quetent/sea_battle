@@ -15,13 +15,11 @@
 
         private void SetAttackCoords()
         {
-            
-
-            var coords = _attackField.GetRandomFreeCell();
-
-
-
-            _lastAttackCoords = coords;    
+            if (_attackField.IsHit(_lastAttackCoords))
+                //_lastAttackCoords = _attackField.GetRandomRegionalEmptyCoord(_lastAttackCoords);
+                WriteLine("s");
+            else
+                _lastAttackCoords = _attackField.GetRandomFreeCell();
         }
 
         private void EnterAttackCoords()
