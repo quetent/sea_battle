@@ -4,8 +4,7 @@ namespace Game
 {
     public class Ship
     {
-        private readonly List<FieldCoords> _location;
-        public List<FieldCoords> Location { get { return _location.Copy(); } }
+        private readonly Dictionary<FieldCoords, bool> _location;
 
         private int _hits;
         public int Hits { get { return _hits; } }
@@ -14,7 +13,7 @@ namespace Game
 
         public Ship(FieldCoords coords, FieldMarks[,] searchField)
         {
-            _location = new List<FieldCoords>();
+            _location = new Dictionary<FieldCoords, bool>();
             Reproduce(coords, searchField);
         }
 
@@ -22,10 +21,11 @@ namespace Game
         {
             string result = string.Empty;
 
-            for (int i = 0; i < _location.Count - 1; i++)
-                result += $"{_location[i]}, ";
-
-            result += _location[^1];                
+            foreach (var part in _location)
+            {
+                var condition = part.Value ? "intact" : "damaged";
+                result += $"{part.Key}: {condition}, ";
+            }            
 
             return $"[ {result} ]";
         }
@@ -40,9 +40,22 @@ namespace Game
             return Belongs(coords.X, coords.Y);
         }
 
-        public void Hit()
+        public void Hit(FieldCoords coords)
         {
-            _hits++;
+            foreach (var part in _location)
+            {
+                if (part.Key.X == coords.X
+                 && part.Key.Y == coords.Y)
+                {
+                    if (!part.Value)
+                        throw new ArgumentException("ship part already damaged", nameof(coords));
+                    else
+                    {
+                        _location[part.Key] = true;
+                        _hits++;
+                    }
+                }
+            }
         }
 
         public List<FieldCoords> GetDestroyFrame()
@@ -50,8 +63,8 @@ namespace Game
             var frame = new List<FieldCoords>();
 
             foreach (var _coords in _location)
-                for (int x = _coords.X - 1; x <= _coords.X + 1; x++)
-                    for (int y = _coords.Y - 1; y <= _coords.Y + 1; y++)
+                for (int x = _coords.Key.X - 1; x <= _coords.Key.X + 1; x++)
+                    for (int y = _coords.Key.Y - 1; y <= _coords.Key.Y + 1; y++)
                         if (Field.IsInFieldRange(x, y) && !Belongs(x, y))
                             frame.Add(new FieldCoords(x, y));
 
@@ -63,7 +76,7 @@ namespace Game
             if (Belongs(coords))
                 return;
 
-            _location.Add(coords);
+            _location.Add(coords, true);
 
             for (int x = coords.X - 1; x <= coords.X + 1; x++)
             {
@@ -79,8 +92,8 @@ namespace Game
         private bool Belongs(int x, int y)
         {
             foreach (var _coords in _location)
-                if (x == _coords.X
-                 && y == _coords.Y)
+                if (x == _coords.Key.X
+                 && y == _coords.Key.Y)
                     return true;
 
             return false;

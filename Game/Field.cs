@@ -57,7 +57,7 @@
         {
             if (GetShipByCoords(coords, out Ship? ship))
             {
-                ship.Hit();
+                ship.Hit(coords);
 
                 if (ship.IsDestroyed())
                     SetDestroyFrame(ship.GetDestroyFrame());
@@ -135,27 +135,8 @@
             }
         }
 
-        private FieldCoords GetFreeCoords(FieldCoords coords)
-        {
-            return GetFreeCoords(coords.X, coords.Y);
-        }
-
         public FieldCoords GetRandomRegionalFreeCoords(FieldCoords coords)
         {
-            //for (int x = coords.X - 1; x <= coords.X + 1; x++)
-            //{
-            //    for (int y = coords.Y - 1; y <= coords.Y + 1; y++)
-            //    {
-            //        if (IsInFieldRange(x, y)
-            //        && !IsAreaCorner(coords, x, y)
-            //        && (IsEmpty(x, y)
-            //        || IsShip(x, y)))
-            //        {
-            //            return new FieldCoords(x, y);
-            //        }
-            //    }
-            //}
-
             return GetFreeCoords(coords);
         }
 
@@ -220,6 +201,11 @@
         private bool IsShip(int x, int y)
         {
             return this[x, y] is FieldMarks.Ship;
+        }
+
+        private FieldCoords GetFreeCoords(FieldCoords coords)
+        {
+            return GetFreeCoords(coords.X, coords.Y);
         }
 
         private void SetDestroyFrame(List<FieldCoords> frame)
