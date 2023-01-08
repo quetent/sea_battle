@@ -112,17 +112,20 @@
             return destroyings == _ships.Count;
         }
 
-        public FieldCoords GetRandomFreeCell()
+        public FieldCoords GetRandomFreeCoords()
         {
-            var x = _random.Next(0, LettersCount);
-            var y = _random.Next(0, NumbersCount);
+            return GetFreeCoords(_random.Next(0, LettersCount),
+                                 _random.Next(0, NumbersCount));
+        }
 
+        private FieldCoords GetFreeCoords(int x, int y)
+        {
             var mY = y;
 
             while (true)
             {
-                if (!(IsHit(x, y)
-                   && IsMiss(x, y)))
+                if (!IsHit(x, y)
+                 && !IsMiss(x, y))
                     return new FieldCoords(x, y);
 
                 y = (y + 1) % NumbersCount;
@@ -130,6 +133,30 @@
                 if (y == mY)
                     x = (x + 1) % LettersCount;
             }
+        }
+
+        private FieldCoords GetFreeCoords(FieldCoords coords)
+        {
+            return GetFreeCoords(coords.X, coords.Y);
+        }
+
+        public FieldCoords GetRandomRegionalFreeCoords(FieldCoords coords)
+        {
+            //for (int x = coords.X - 1; x <= coords.X + 1; x++)
+            //{
+            //    for (int y = coords.Y - 1; y <= coords.Y + 1; y++)
+            //    {
+            //        if (IsInFieldRange(x, y)
+            //        && !IsAreaCorner(coords, x, y)
+            //        && (IsEmpty(x, y)
+            //        || IsShip(x, y)))
+            //        {
+            //            return new FieldCoords(x, y);
+            //        }
+            //    }
+            //}
+
+            return GetFreeCoords(coords);
         }
 
         public bool GetShipByCoords(FieldCoords coords, out Ship? ship)
@@ -144,11 +171,6 @@
             ship = null;
             return false;
         }
-
-        //public FieldCoords GetRandomRegionalEmptyCoord(FieldCoords coords)
-        //{
-
-        //}
 
         public bool IsHit(FieldCoords coords)
         {
@@ -170,6 +192,16 @@
             return this[x, y] is FieldMarks.Miss;
         }
 
+        private bool IsEmpty(int x, int y)
+        {
+            return this[x, y] is FieldMarks.Empty;
+        }
+
+        private bool IsEmpty(FieldCoords coords)
+        {
+            return this[coords] is FieldMarks.Empty;
+        }
+
         private static bool IsEmpty(char character)
         {
             return character is (char)FieldMarks.Empty;
@@ -183,6 +215,11 @@
         private bool IsShip(FieldCoords coords)
         {
             return this[coords] is FieldMarks.Ship;
+        }
+
+        private bool IsShip(int x, int y)
+        {
+            return this[x, y] is FieldMarks.Ship;
         }
 
         private void SetDestroyFrame(List<FieldCoords> frame)

@@ -16,10 +16,9 @@
         private void SetAttackCoords()
         {
             if (_attackField.IsHit(_lastAttackCoords))
-                //_lastAttackCoords = _attackField.GetRandomRegionalEmptyCoord(_lastAttackCoords);
-                WriteLine("s");
+                _lastAttackCoords = _attackField.GetRandomRegionalFreeCoords(_lastAttackCoords);
             else
-                _lastAttackCoords = _attackField.GetRandomFreeCell();
+                _lastAttackCoords = _attackField.GetRandomFreeCoords();
         }
 
         private void EnterAttackCoords()
