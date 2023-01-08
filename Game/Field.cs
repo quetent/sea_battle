@@ -112,10 +112,11 @@
             return destroyings == _ships.Count;
         }
 
-        public FieldCoords GetRandomFreeCoords()
+        public FieldCoords GetRandomFreeCoords(int sX = 0, int eX = LettersCount, 
+                                               int sY = 0, int eY = NumbersCount)
         {
-            return GetFreeCoords(_random.Next(0, LettersCount),
-                                 _random.Next(0, NumbersCount));
+            return GetFreeCoords(_random.Next(sX, eX),
+                                 _random.Next(sY, eY));
         }
 
         private FieldCoords GetFreeCoords(int x, int y)
@@ -137,7 +138,19 @@
 
         public FieldCoords GetRandomRegionalFreeCoords(FieldCoords coords)
         {
-            return GetFreeCoords(coords);
+            var csX = coords.X - 1;
+            var sX = csX >= 0 ? csX : coords.X;
+
+            var ceX = coords.X + 1;
+            var eX = ceX >= 0 ? ceX : coords.X;
+
+            var csY = coords.Y - 1;
+            var sY = csY >= 0 ? csY : coords.Y;
+
+            var ceY = coords.Y + 1;
+            var eY = ceY >= 0 ? ceY : coords.Y;
+
+            return GetRandomFreeCoords(sX, eX, sY, eY);
         }
 
         public bool GetShipByCoords(FieldCoords coords, out Ship? ship)
@@ -196,11 +209,6 @@
         private bool IsShip(FieldCoords coords)
         {
             return this[coords] is FieldMarks.Ship;
-        }
-
-        private bool IsShip(int x, int y)
-        {
-            return this[x, y] is FieldMarks.Ship;
         }
 
         private FieldCoords GetFreeCoords(FieldCoords coords)

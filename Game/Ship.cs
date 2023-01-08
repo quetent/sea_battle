@@ -13,7 +13,7 @@ namespace Game
 
         public Ship(FieldCoords coords, FieldMarks[,] searchField)
         {
-            _location = new Dictionary<FieldCoords, bool>();
+            _location = new();
             Reproduce(coords, searchField);
         }
 

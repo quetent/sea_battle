@@ -2,46 +2,46 @@
 {
     public static class Settings
     {
-        public static readonly string WindowTitle = "Sea Battle";
+        public const string WindowTitle = "Sea Battle";
 
-        public static readonly int WindowWidthReserve = 0;
-        public static readonly int WindowHeightReserve = 6;
+        public const int WindowWidthReserve = 0;
+        public const int WindowHeightReserve = 6;
 
-        public static readonly string StopCommand = "STOP";
-        public static readonly string RestartCommand = "RESTART";
+        public const string StopCommand = "STOP";
+        public const string RestartCommand = "RESTART";
 
-        public static readonly string FieldFilename = "fieldPlayer";
-        public static readonly string FilesLocationDir = @"..\..\..\..\";
+        public const string FieldFilename = "fieldPlayer";
+        public const string FilesLocationDir = @"..\..\..\..\";
 
-        public static readonly string SelfCaption = "< You >";
-        public static readonly string OpponentCaption = "< Enemy >";
+        public const string SelfCaption = "< You >";
+        public const string OpponentCaption = "< Enemy >";
 
-        public static readonly int BotCommandEnteringInMs = 350;
-        public static readonly int CommandDelayInMs = 150;
-        public static readonly int RestartingTimeInMs = 1000;
+        public const int BotCommandEnteringInMs = 350;
+        public const int CommandDelayInMs = 150;
+        public const int RestartingTimeInMs = 1000;
 
-        public static readonly int LettersCount = 7;
-        public static readonly int NumbersCount = 7;
+        public const int LettersCount = 7;
+        public const int NumbersCount = 7;
 
-        public static readonly int AlphabetSize = 26;
-        public static readonly int NumbersSize = 10;
+        public const int AlphabetSize = 26;
+        public const int NumbersSize = 10;
 
-        public static readonly int CharacterOffset = 65;
+        public const int CharacterOffset = 65;
 
-        public static readonly bool IsFullDrawing = true;
-        public static readonly bool IsVersusBot = true;
+        public const bool IsFullDrawing = true;
+        public const bool IsVersusBot = true;
 
         public static readonly int AxesIndent = 1;
         public static readonly int IndentFromDigit = 1;
         public static readonly int IndentBetweenFields = 5;
         public static readonly int IndentBetweenCaptions = IndentBetweenFields;
 
-        public static readonly ConsoleColor DigitsColor = ConsoleColor.White;
-        public static readonly ConsoleColor LettersColor = ConsoleColor.DarkBlue;
-        public static readonly ConsoleColor PlayerCaptionColor = ConsoleColor.DarkYellow;
+        public const ConsoleColor DigitsColor = ConsoleColor.White;
+        public const ConsoleColor LettersColor = ConsoleColor.DarkBlue;
+        public const ConsoleColor PlayerCaptionColor = ConsoleColor.DarkYellow;
 
-        public static readonly ConsoleColor WinnerColor = ConsoleColor.Cyan;
-        public static readonly ConsoleColor PlayerTurnColor = ConsoleColor.DarkYellow;
+        public const ConsoleColor WinnerColor = ConsoleColor.Cyan;
+        public const ConsoleColor PlayerTurnColor = ConsoleColor.DarkYellow;
 
         public static void ResetConsoleForegroundColor() => ConsoleForegroundColor = ConsoleColor.White;
         public static ConsoleColor ConsoleForegroundColor 
