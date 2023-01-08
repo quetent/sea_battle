@@ -33,7 +33,7 @@
             if (_attackField.GetShipByCoords(_target, out Ship? ship)
              && !ship.IsDestroyed())
             {
-                _lastAttackCoords = _attackField.GetRandomRegionalFreeCoords(_lastAttackCoords);
+                _lastAttackCoords = _attackField.GetRandomRegionalFreeCoords(_target);
             }
             else
             {

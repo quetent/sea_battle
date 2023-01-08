@@ -142,13 +142,13 @@
             var sX = csX >= 0 ? csX : coords.X;
 
             var ceX = coords.X + 1;
-            var eX = ceX >= 0 ? ceX : coords.X;
+            var eX = ceX < LettersCount ? ceX : coords.X;
 
             var csY = coords.Y - 1;
             var sY = csY >= 0 ? csY : coords.Y;
 
             var ceY = coords.Y + 1;
-            var eY = ceY >= 0 ? ceY : coords.Y;
+            var eY = ceY < NumbersCount ? ceY : coords.Y;
 
             return GetRandomFreeCoords(sX, eX, sY, eY);
         }
