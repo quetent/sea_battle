@@ -82,6 +82,7 @@ namespace Game
 
             Drawer.Erase();
 
+            ResetBotTarget();
             RefreshPlayerFields();
         }
 
@@ -93,6 +94,17 @@ namespace Game
         public static void WaitTime(int milliseconds)
         {
             Thread.Sleep(milliseconds);
+        }
+
+        private void ResetBotTarget()
+        {
+            if (IsVersusBot)
+            {
+                if (_player1 is Bot bot1)
+                    bot1.ResetTargetShipCoords();
+                if (_player2 is Bot bot2)
+                    bot2.ResetTargetShipCoords();
+            }
         }
 
         private static void InitiateGameStop()

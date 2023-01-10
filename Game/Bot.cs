@@ -5,7 +5,7 @@ namespace Game
 {
     public class Bot : Player
     {
-        private ObservableCollection<FieldCoords> _targetShipHits;
+        private readonly ObservableCollection<FieldCoords> _targetShipHits;
         private bool _isNeedTargetRangeRecalculating;
 
         private int _startX, _endX, _startY, _endY;
@@ -25,23 +25,18 @@ namespace Game
             return new Command(CommandsEnum.SimpleAttack);
         }
 
-        private int a; // temp
+        public void ResetTargetShipCoords()
+        {
+            _targetShipHits.Clear();
+        }
+
         private void SetAttackCoords()
         {
-
-            if (a == 0) // temp
-            {
-                CommandReader.ReadCommand(out string rawOutput);
-                _lastAttackCoords = new FieldCoords(rawOutput[0], int.Parse(rawOutput[1..]));
-                _targetShipHits.Add(_lastAttackCoords);
-                a++;
-                return;
-            } // temp
-
             if (_attackField.IsHit(_lastAttackCoords))
                 _targetShipHits.Add(_lastAttackCoords);
 
-            if (_attackField.GetShipByCoords(_targetShipHits[^1], out Ship? ship)
+            if (_targetShipHits.Count > 0
+             && _attackField.GetShipByCoords(_targetShipHits[^1], out Ship? ship)
              && !ship!.IsDestroyed())
             {
                 SetTargetShipRange();

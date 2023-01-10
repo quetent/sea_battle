@@ -182,11 +182,6 @@
             return this[x, y] is FieldMarks.Hit;
         }
 
-        public bool IsMiss(FieldCoords coords)
-        {
-            return this[coords] is FieldMarks.Miss;
-        }
-
         public bool IsMiss(int x, int y)
         {
             return this[x, y] is FieldMarks.Miss;
