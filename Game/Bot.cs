@@ -75,11 +75,6 @@ namespace Game
             (_startX, _startY) = FindTargetShipMinCoords();
             (_endX, _endY) = FindTargetShipMaxCoords();
 
-            if (true)
-            {
-
-            }
-
             _isNeedTargetRangeRecalculating = false;
         }
 

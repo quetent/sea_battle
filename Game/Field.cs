@@ -137,10 +137,21 @@
             for (int tX = startX - 1; tX <= endX + 1; tX++)
                 for (int tY = startY - 1; tY <= endY + 1; tY++)
                     if (IsInFieldRange(tX, tY)
-                     && IsFree(tX, tY))
+                     && IsFree(tX, tY)
+                     && !IsAreaCorner(tX, tY, startX, endX, startY, endY))
                         regionalFreeCoords.Add(new FieldCoords(tX, tY));
 
             return regionalFreeCoords;
+        }
+
+        private static bool IsAreaCorner(int x, int y, 
+                                         int startX, int endX, 
+                                         int startY, int endY)
+        {
+            return (x, y) == (startX - 1, startY - 1)
+                || (x, y) == (startX - 1, endY + 1)
+                || (x, y) == (endX + 1, endY + 1)
+                || (x, y) == (endX + 1, endY - 1);
         }
 
         private bool IsFree(int x, int y)
