@@ -141,13 +141,24 @@
                     for (int tY = startY - offset; tY <= endY + offset; tY++)
                         if (IsInFieldRange(tX, tY)
                          && IsFree(tX, tY)
-                         && !IsAreaCorner(tX, tY, startX, endX, startY, endY))
+                         && !IsAreaCorner(tX, tY, startX, endX, startY, endY)
+                         && IsExternalArea(tX, tY, offset, startX, endX, startY, endY))
                             regionalFreeCoords.Add(new FieldCoords(tX, tY));
 
                 offset++;
             }
 
             return regionalFreeCoords;
+        }
+
+        private bool IsExternalArea(int x, int y, int offset,
+                                    int startX, int endX, 
+                                    int startY, int endY)
+        {
+            return (x == startX - offset
+                || x == endX)
+                || (y == startY - offset
+                || y == endY);
         }
 
         private static bool IsAreaCorner(int x, int y, 
