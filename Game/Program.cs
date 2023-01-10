@@ -1,42 +1,55 @@
-﻿namespace Game
+﻿using System.Reflection;
+
+namespace Game
 {
     internal class Program
     {
         static void Main()
         {
-            var player1Name = "Awen";
-            string player2Name;
+            var (name1, name2) = GetPlayersNames("Awen");
 
-            if (IsVersusBot)
-                player2Name = "Bot";
-            else
-                player2Name = "Darya";
+            var (path1, path2) = GetFieldFilesPaths($@"{FilesLocationDir}\{FieldFilename}1.txt",
+                                                    $@"{FilesLocationDir}\{FieldFilename}2.txt");
 
-            var playerField1 = new Field();
-            var playerField2 = new Field();
+            var (field1, field2) = GetPlayersFields();
 
-            var fieldFilepath1 = $@"{FilesLocationDir}\{FieldFilename}1.txt";
-            var fieldFilepath2 = $@"{FilesLocationDir}\{FieldFilename}2.txt";
+            var (player1, player2) = GetPlayers(name1, name2, 
+                                                path1, path2, 
+                                                field1, field2);  
 
-            var player1 = new Player(player1Name,
-                                     fieldFilepath1,
-                                     playerField1,
-                                     playerField2);
+            var game = new Game(player1, player2);
 
+            game.Start();
+        }
+
+        private static (Player, Player) GetPlayers(string name1, string name2,
+                                                   string path1, string path2,
+                                                   Field field1, Field field2)
+        {
+            var player1 = new Player(name1, path1, field1, field2);
             Player player2;
 
             if (IsVersusBot)
-                player2 = new Bot(player2Name,
-                                  fieldFilepath2,
-                                  playerField2,
-                                  playerField1);
+                player2 = new Bot(name2, path2, field2, field1);
             else
-                player2 = new Player(player2Name,
-                                     fieldFilepath2,
-                                     playerField2,
-                                     playerField1);
+                player2 = new Player(name2, path2, field2, field1);
 
-            new Game(player1, player2).Start();
+            return (player1, player2);
+        }
+
+        private static (string, string) GetFieldFilesPaths(string path1, string path2)
+        {
+            return (path1, path2);
+        }
+
+        private static (Field, Field) GetPlayersFields()
+        {
+            return (new Field(), new Field());
+        }
+
+        private static (string, string) GetPlayersNames(string name1, string name2 = "Bot")
+        {
+            return (name1, name2);
         }
     }
 }
