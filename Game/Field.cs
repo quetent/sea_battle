@@ -132,14 +132,20 @@
         private List<FieldCoords> GenerateFreeCoordsList(int startX, int endX,
                                                          int startY, int endY)
         {
+            var offset = 0;
             var regionalFreeCoords = new List<FieldCoords>();
 
-            for (int tX = startX - 1; tX <= endX + 1; tX++)
-                for (int tY = startY - 1; tY <= endY + 1; tY++)
-                    if (IsInFieldRange(tX, tY)
-                     && IsFree(tX, tY)
-                     && !IsAreaCorner(tX, tY, startX, endX, startY, endY))
-                        regionalFreeCoords.Add(new FieldCoords(tX, tY));
+            while (regionalFreeCoords.Count == 0)
+            {
+                for (int tX = startX - offset; tX <= endX + offset; tX++)
+                    for (int tY = startY - offset; tY <= endY + offset; tY++)
+                        if (IsInFieldRange(tX, tY)
+                         && IsFree(tX, tY)
+                         && !IsAreaCorner(tX, tY, startX, endX, startY, endY))
+                            regionalFreeCoords.Add(new FieldCoords(tX, tY));
+
+                offset++;
+            }
 
             return regionalFreeCoords;
         }
