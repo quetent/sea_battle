@@ -18,7 +18,7 @@ namespace Game
                                                 field1, field2);
 
             if (IsVersusBot)
-                Field.FillBotFieldFile(player2);
+                Field.AutoFillFieldFile(player2.FilePath, player1.FilePath);
 
             var game = new Game(player1, player2);
 

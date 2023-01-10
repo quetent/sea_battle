@@ -180,7 +180,7 @@ namespace Game
             _player1.DefenseField.ParseFieldFromFile(_player1.FilePath);
 
             if (IsVersusBot)
-                Field.FillBotFieldFile(_player2);
+                Field.AutoFillFieldFile(_player2.FilePath, _player1.FilePath);
 
             _player2.DefenseField.ParseFieldFromFile(_player2.FilePath);
         }

@@ -129,11 +129,9 @@
             return freeCoords[_random.Next(freeCoords.Count)];
         }
 
-        public static void FillBotFieldFile(Player bot)
+        public static void AutoFillFieldFile(FileInfo fillingFieldPath, FileInfo exampleFieldPath)
         {
-            if (!IsVersusBot)
-                throw new ArgumentException("settings parameter is false", nameof(IsVersusBot));
-
+            
             // next
         }
 
