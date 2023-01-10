@@ -178,6 +178,10 @@ namespace Game
         private void RefreshPlayerFields()
         {
             _player1.DefenseField.ParseFieldFromFile(_player1.FilePath);
+
+            if (IsVersusBot)
+                Field.FillBotFieldFile(_player2);
+
             _player2.DefenseField.ParseFieldFromFile(_player2.FilePath);
         }
 

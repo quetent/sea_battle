@@ -129,6 +129,14 @@
             return freeCoords[_random.Next(freeCoords.Count)];
         }
 
+        public static void FillBotFieldFile(Player bot)
+        {
+            if (!IsVersusBot)
+                throw new ArgumentException("settings parameter is false", nameof(IsVersusBot));
+
+            // next
+        }
+
         private List<FieldCoords> GenerateFreeCoordsList(int startX, int endX,
                                                          int startY, int endY)
         {

@@ -15,7 +15,10 @@ namespace Game
 
             var (player1, player2) = GetPlayers(name1, name2, 
                                                 path1, path2, 
-                                                field1, field2);  
+                                                field1, field2);
+
+            if (IsVersusBot)
+                Field.FillBotFieldFile(player2);
 
             var game = new Game(player1, player2);
 
