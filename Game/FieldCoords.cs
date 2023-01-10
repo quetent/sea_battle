@@ -58,7 +58,7 @@
             if (!IsValidCoordX(x))
                 throw new ArgumentException("coordinate character should be a-z", nameof(x));
 
-            return x - 65;
+            return x - CharacterOffset;
         }
 
         private static int ParseY(int y)

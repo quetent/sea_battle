@@ -57,7 +57,7 @@
         {
             if (GetShipByCoords(coords, out Ship? ship))
             {
-                ship.Hit(coords);
+                ship!.Hit(coords);
 
                 if (ship.IsDestroyed())
                     SetDestroyFrame(ship.GetDestroyFrame());
@@ -112,45 +112,40 @@
             return destroyings == _ships.Count;
         }
 
-        public FieldCoords GetRandomFreeCoords(int sX = 0, int eX = LettersCount, 
-                                               int sY = 0, int eY = NumbersCount)
+        public FieldCoords GetRandomFreeCoords(int startX = 0, int endX = LettersCount, 
+                                               int startY = 0, int endY = NumbersCount)
         {
-            return GetFreeCoords(_random.Next(sX, eX),
-                                 _random.Next(sY, eY));
+            var x = _random.Next(startX, endX);
+            var y = _random.Next(startY, endY);
+
+            return GetRegionalFreeCoords(x, x, y, y);
         }
 
-        private FieldCoords GetFreeCoords(int x, int y)
+        public FieldCoords GetRegionalFreeCoords(int startX, int endX, 
+                                                 int startY, int endY)
         {
-            var mY = y;
+            var freeCoords = GenerateFreeCoordsList(startX, endX, startY, endY);
 
-            while (true)
-            {
-                if (!IsHit(x, y)
-                 && !IsMiss(x, y))
-                    return new FieldCoords(x, y);
-
-                y = (y + 1) % NumbersCount;
-
-                if (y == mY)
-                    x = (x + 1) % LettersCount;
-            }
+            return freeCoords[_random.Next(freeCoords.Count)];
         }
 
-        public FieldCoords GetRandomRegionalFreeCoords(FieldCoords coords)
+        private List<FieldCoords> GenerateFreeCoordsList(int startX, int endX,
+                                                         int startY, int endY)
         {
-            var csX = coords.X - 1;
-            var sX = csX >= 0 ? csX : coords.X;
+            var regionalFreeCoords = new List<FieldCoords>();
 
-            var ceX = coords.X + 1;
-            var eX = ceX < LettersCount ? ceX : coords.X;
+            for (int tX = startX - 1; tX <= endX + 1; tX++)
+                for (int tY = startY - 1; tY <= endY + 1; tY++)
+                    if (IsInFieldRange(tX, tY)
+                     && IsFree(tX, tY))
+                        regionalFreeCoords.Add(new FieldCoords(tX, tY));
 
-            var csY = coords.Y - 1;
-            var sY = csY >= 0 ? csY : coords.Y;
+            return regionalFreeCoords;
+        }
 
-            var ceY = coords.Y + 1;
-            var eY = ceY < NumbersCount ? ceY : coords.Y;
-
-            return GetRandomFreeCoords(sX, eX, sY, eY);
+        private bool IsFree(int x, int y)
+        {
+            return !(IsHit(x, y) || IsMiss(x, y));
         }
 
         public bool GetShipByCoords(FieldCoords coords, out Ship? ship)
@@ -186,16 +181,6 @@
             return this[x, y] is FieldMarks.Miss;
         }
 
-        private bool IsEmpty(int x, int y)
-        {
-            return this[x, y] is FieldMarks.Empty;
-        }
-
-        private bool IsEmpty(FieldCoords coords)
-        {
-            return this[coords] is FieldMarks.Empty;
-        }
-
         private static bool IsEmpty(char character)
         {
             return character is (char)FieldMarks.Empty;
@@ -209,11 +194,6 @@
         private bool IsShip(FieldCoords coords)
         {
             return this[coords] is FieldMarks.Ship;
-        }
-
-        private FieldCoords GetFreeCoords(FieldCoords coords)
-        {
-            return GetFreeCoords(coords.X, coords.Y);
         }
 
         private void SetDestroyFrame(List<FieldCoords> frame)
